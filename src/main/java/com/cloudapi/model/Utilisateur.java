@@ -2,6 +2,7 @@ package com.cloudapi.model;
 
 import java.util.List;
 
+import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -56,10 +57,54 @@ public class Utilisateur {
             throw new Exception("Mot de passe ou email invalide");
         }
         Session session = new Session().insert(entityManager, users.get(0).id);
-        rep.success(session);
+        rep.success("Connection avec succès",session);
         return rep;
+    }
+
+    public List<Utilisateur> findAll(EntityManager entityManager){
+        String sql = "SELECT * FROM utilisateurs where etat_utilisateur>=0";
+        Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
+        return (List<Utilisateur>) query.getResultList();
+    }
 
 
+    public Utilisateur findById(EntityManager entityManager, int id){
+        String sql = "SELECT * FROM utilisateurs where id_utilisateur=?";
+        Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
+        query.setParameter(1, id);
+        return (Utilisateur) query.getSingleResult();
+    }
+
+
+    public Utilisateur insert(EntityManager entityManager, UtilisateurDTO utilisateurDTO){
+        String sql = """
+                INSERT INTO utilisateurs (nom_utilisateur, email_utilisateur, password_utilisateur, statut_utilisateur) VALUES
+                (?, ?, ?, 0) RETURNING *
+                """;
+        Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
+        query.setParameter(1, utilisateurDTO.getNom());
+        query.setParameter(2, utilisateurDTO.getEmail());
+        query.setParameter(3, utilisateurDTO.getMdp());
+        return (Utilisateur) query.getSingleResult();
+    }
+
+
+    public Utilisateur update(EntityManager entityManager,int id, UtilisateurDTO utilisateurDTO){
+        String sql = "UPDATE Utilisateurs set nom_utilisateur= ?, email_utilisateur = ?, password_utilisateur= ? where id_utilisateur=? RETURNING *";
+        Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
+        query.setParameter(1, utilisateurDTO.getNom());
+        query.setParameter(2, utilisateurDTO.getEmail());
+        query.setParameter(3, utilisateurDTO.getMdp());
+        query.setParameter(4, id);
+        return (Utilisateur) query.getSingleResult();
+    }
+
+
+    public Utilisateur delete(EntityManager entityManager,int id){
+        String sql = "UPDATE Utilisateurs set etat_utilisateur=-10 where id_utilisateur=? RETURNING *";
+        Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
+        query.setParameter(1, id);
+        return (Utilisateur) query.getSingleResult();
     }
 
 

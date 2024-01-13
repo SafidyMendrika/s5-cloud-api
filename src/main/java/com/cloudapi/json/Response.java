@@ -9,14 +9,15 @@ public class Response {
     Object data;
 
 
+
     public void error(Exception e){
         setCode(100);
         setMessage(e.getMessage());
     }
 
-    public void success(Object data){
+    public void success(String message,Object data){
         setCode(200);
-        setMessage("Success");
+        setMessage(message);
         setData(data);
     }
 }

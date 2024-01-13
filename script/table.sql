@@ -34,6 +34,7 @@ CREATE TABLE marques(
 CREATE TABLE modeles(
     id_modele SERIAL PRIMARY KEY,
     idMarque INTEGER REFERENCES marques(id_marque),
+    idCategorie INTEGER REFERENCES categories(id_categorie),
     nom_modele VARCHAR(255) NOT NULL,
     etat_modele INTEGER DEFAULT 0
 );
@@ -41,7 +42,6 @@ CREATE TABLE modeles(
 
 CREATE TABLE voitures(
     id_voiture SERIAL PRIMARY KEY,
-    idCategorie INTEGER REFERENCES categories(id_categorie),
     idModele INTEGER REFERENCES modeles(id_modele),
     nom_voiture VARCHAR(255) NOT NULL,
     etat_voiture INTEGER DEFAULT 0
@@ -57,6 +57,14 @@ CREATE TABLE annonces(
     date_validation TIMESTAMP,
     date_annonce TIMESTAMP NOT NULL,
     etat_annonce INTEGER DEFAULT 0
+);
+
+
+CREATE TABLE photos_annonces(
+    id_photo SERIAL PRIMARY KEY,
+    idAnnonce INTEGER REFERENCES annonces(id_annonce),
+    path VARCHAR(255) NOT NULL,
+    etat_photo INTEGER DEFAULT 0
 );
 
 

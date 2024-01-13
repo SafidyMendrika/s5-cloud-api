@@ -4,11 +4,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
@@ -40,23 +42,26 @@ public class UtilisateurController {
 
 
     @GetMapping
-    public ResponseEntity<String> findAll(){
-        return ResponseEntity.ok("utilisateurs all");
+    public ResponseEntity<Response> findAll(){
+        Response response = new Response();
+        response.success("Liste des utilisateurs", new Utilisateur().findAll(entityManager));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String insert(@RequestBody UtilisateurDTO utilisateurDTO){
-        return "insertion";
+    public ResponseEntity<Response> insert(@RequestBody UtilisateurDTO utilisateurDTO){
+        Response response = new Response();
+        response.success("Insertion d'un utilisateur", new Utilisateur().insert(entityManager, utilisateurDTO));
+        return ResponseEntity.ok(response);
     }
 
-
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String modifier(@RequestBody UtilisateurDTO utilisateurDTO){
+    @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String modifier(@PathVariable int id, @RequestBody UtilisateurDTO utilisateurDTO){
         return "modification";
     }
 
-    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String supprimer(@RequestBody UtilisateurDTO utilisateurDTO){
+    @DeleteMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String supprimer(@PathVariable int id, @RequestBody UtilisateurDTO utilisateurDTO){
         return "supprimer";
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cloudapi.dto.AnnonceDTO;
+import com.cloudapi.json.Response;
+import com.cloudapi.model.Annonce;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -22,24 +25,39 @@ public class AnnonceController {
     private EntityManager entityManager;
 
 
+    @GetMapping(value = "{id}/photos")
+    public ResponseEntity<Response> findAllPhotos(@PathVariable int id){
+        Response response = new Response();
+        response.success("Liste des photos de l'annonce N°" + id, new Annonce().findAllPhotos(entityManager, id));
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping
-    public ResponseEntity<String> findAll(){
-        return ResponseEntity.ok("annonces all");
+    public ResponseEntity<Response> findAll(){
+        Response response = new Response();
+        response.success("Liste des annonces", new Annonce().findAll(entityManager));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String insert(@RequestBody AnnonceDTO annonceDTO){
-        return "insert";
+    public ResponseEntity<Response> insert(@RequestBody AnnonceDTO annonceDTO){
+        Response response = new Response();
+        response.success("Insertion d'une annonce", new Annonce().insert(entityManager, annonceDTO));
+        return ResponseEntity.ok(response);
     }
 
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String modifier(@RequestBody AnnonceDTO annonceDTO){
-        return "modification";
+    @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody AnnonceDTO annonceDTO){
+        Response response = new Response();
+        response.success("Modification d'une annonce", new Annonce().update(entityManager,id, annonceDTO));
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String supprimer(@RequestBody AnnonceDTO annonceDTO){
-        return "supprimer";
+    @DeleteMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response>  supprimer(@PathVariable int id){
+        Response response = new Response();
+        response.success("Suppression d'une annonce", new Annonce().delete(entityManager,id));
+        return ResponseEntity.ok(response);
     }     
 }

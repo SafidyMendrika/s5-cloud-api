@@ -4,5 +4,6 @@ DROP TABLE sessions CASCADE;
 DROP TABLE utilisateurs CASCADE;
 DROP TABLE categories CASCADE;
 DROP TABLE annonces_favorites CASCADE;
+DROP TABLE photos_annonces CASCADE;
 DROP TABLE annonces CASCADE;
 DROP TABLE voitures CASCADE;
