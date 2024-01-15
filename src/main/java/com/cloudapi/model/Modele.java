@@ -3,12 +3,14 @@ package com.cloudapi.model;
 import java.util.List;
 
 import com.cloudapi.dto.ModeleDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Query;
 import jakarta.persistence.Table;
@@ -23,8 +25,10 @@ public class Modele {
     @Column(name = "id_modele")
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "idmarque", referencedColumnName = "id_marque")
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "idmarque")
     private Marque marque;
 
     @OneToOne
@@ -37,6 +41,8 @@ public class Modele {
     @Column(name = "etat_modele")
     private int etat;
 
+
+    @SuppressWarnings(value = "unchecked")
     public List<Modele> findAll(EntityManager entityManager){
         String sql = "SELECT * FROM modeles where etat_modele>=0";
         Query query = entityManager.createNativeQuery(sql, Modele.class);

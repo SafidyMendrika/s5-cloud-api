@@ -26,9 +26,30 @@ public class UtilisateurController {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @GetMapping(value = "{id}/annonces-favorites")
+    public ResponseEntity<Response> findAllAnnoncesFavorites(@PathVariable int id){
+        Response response = new Response();
+        response.success("Liste des annonces favorites de l' utilisateur "+ id, new Utilisateur().findById(entityManager,id).getAnnonceFavorites());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "{id}/annonces")
+    public ResponseEntity<Response> findAllAnnonces(@PathVariable int id){
+        Response response = new Response();
+        response.success("Liste des annonces de l' utilisateur "+ id, new Utilisateur().findById(entityManager,id).getAnnonces());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
+        Response response = new Response();
+        response.success("Inscription d'un utilisateur", new Utilisateur().insert(entityManager, utilisateurDTO));
+        return ResponseEntity.ok(response);
+    }
+
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "login")
-    public ResponseEntity<Object> login(@RequestBody UtilisateurDTO utilisateurDTO){
+    public ResponseEntity<Response> login(@RequestBody UtilisateurDTO utilisateurDTO){
         Response rep = new Response();
         try {
             rep = new Utilisateur().verificationLogin(entityManager, utilisateurDTO.getEmail(), utilisateurDTO.getMdp());

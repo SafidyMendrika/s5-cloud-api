@@ -2,7 +2,6 @@ package com.cloudapi.model;
 
 import java.util.List;
 
-import com.cloudapi.dto.ModeleDTO;
 import com.cloudapi.dto.VoitureDTO;
 
 import jakarta.persistence.Column;
@@ -35,6 +34,7 @@ public class Voiture {
     private int etat;
 
 
+    @SuppressWarnings(value = "unchecked")
     public List<Voiture> findAll(EntityManager entityManager){
         String sql = "SELECT * FROM voitures where etat_voiture>=0";
         Query query = entityManager.createNativeQuery(sql, Voiture.class);

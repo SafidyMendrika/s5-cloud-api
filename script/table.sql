@@ -54,6 +54,7 @@ CREATE TABLE annonces(
     idUtilisateur INTEGER REFERENCES utilisateurs(id_utilisateur),
     idVoiture INTEGER REFERENCES voitures (id_voiture),
     description_annonce VARCHAR(255) NOT NULL,
+    prix_annonce DOUBLE PRECISION NOT NULL,
     date_validation TIMESTAMP,
     date_annonce TIMESTAMP NOT NULL,
     etat_annonce INTEGER DEFAULT 0

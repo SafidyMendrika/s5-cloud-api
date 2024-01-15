@@ -1,10 +1,11 @@
 package com.cloudapi.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,13 +40,31 @@ public class Utilisateur {
     @Column(name = "etat_utilisateur")
     private int etat;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
     private List<Annonce> annonces;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
     private List<AnnonceFavorite> annonceFavorites;
 
 
+    public List<Annonce> getAnnonceFavorites(){
+        return annonces.stream()
+                .filter(element -> element.getEtat() >= 0)
+                .collect(Collectors.toList()); 
+    }
+
+
+    public List<Annonce> getAnnonces(){
+        return annonces.stream()
+                .filter(element -> element.getEtat() >= 0)
+                .collect(Collectors.toList()); 
+    }
+
+
+
+    @SuppressWarnings(value = "unchecked")
     public Response verificationLogin(EntityManager entityManager,String email, String mdp)throws Exception{
         Response rep = new Response();
         String sql = "SELECT * FROM utilisateurs where email_utilisateur= :email and password_utilisateur = :mdp";
@@ -61,6 +80,7 @@ public class Utilisateur {
         return rep;
     }
 
+    @SuppressWarnings(value = "unchecked")
     public List<Utilisateur> findAll(EntityManager entityManager){
         String sql = "SELECT * FROM utilisateurs where etat_utilisateur>=0";
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);

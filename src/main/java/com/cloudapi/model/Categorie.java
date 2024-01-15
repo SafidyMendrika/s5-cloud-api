@@ -1,10 +1,7 @@
 package com.cloudapi.model;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import com.cloudapi.dto.AnnonceDTO;
 import com.cloudapi.dto.CategorieDTO;
 
 import jakarta.persistence.Column;
@@ -30,7 +27,7 @@ public class Categorie {
     @Column(name = "etat_categorie")
     private int etat;
 
-
+    @SuppressWarnings(value = "unchecked")
     public List<Categorie> findAll(EntityManager entityManager){
         String sql = "SELECT * FROM categories where etat_categorie>=0";
         Query query = entityManager.createNativeQuery(sql, Categorie.class);

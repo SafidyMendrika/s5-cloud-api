@@ -3,6 +3,7 @@ package com.cloudapi.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.cloudapi.dto.AnnonceDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,6 +14,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Query;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -32,6 +34,10 @@ public class Annonce {
     @Column(name= "description_annonce")
     private String description;
 
+
+    @Column(name = "prix_annonce")
+    private double prix;
+
     @Column(name = "date_validation")
     private LocalDateTime dateValidation;
 
@@ -48,15 +54,32 @@ public class Annonce {
     private Utilisateur utilisateur;
 
 
-    public List<PhotoAnnonce> findAllPhotos(EntityManager entityManager, int id){
-        String sql = "SELECT * FROM photos_annonces where idannonce = ?";
-        Query query = entityManager.createNativeQuery(sql, PhotoAnnonce.class);
-        query.setParameter(1, id);
-        return (List<PhotoAnnonce>) query.getResultList();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "annonce")
+    private List<PhotoAnnonce> photoAnnonces;
+
+
+    public List<PhotoAnnonce> getPhotoAnnonces(){
+        return photoAnnonces.stream()
+                .filter(photoAnnonce -> photoAnnonce.getEtat() >= 0)
+                .collect(Collectors.toList());
     }
 
+
+    public Annonce confirmer(EntityManager entityManager,int id){
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter dFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String sql = "UPDATE annonces set etat_annonce=10, date_validation= CAST (? AS TIMESTAMP) where id_annonce=? RETURNING *";
+        Query query = entityManager.createNativeQuery(sql, Annonce.class);
+        query.setParameter(1, dFormatter.format(date));
+        query.setParameter(2, id);
+        return (Annonce) query.getSingleResult();
+    }
+
+    @SuppressWarnings(value = "unchecked")
     public List<Annonce> findAll(EntityManager entityManager){
-        String sql = "SELECT * FROM annonces where etat_annonce>=0";
+        String sql = "SELECT * FROM annonces where etat_annonce>=10";
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
         return (List<Annonce>) query.getResultList();
     }

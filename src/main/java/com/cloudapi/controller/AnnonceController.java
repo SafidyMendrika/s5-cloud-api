@@ -28,7 +28,14 @@ public class AnnonceController {
     @GetMapping(value = "{id}/photos")
     public ResponseEntity<Response> findAllPhotos(@PathVariable int id){
         Response response = new Response();
-        response.success("Liste des photos de l'annonce N°" + id, new Annonce().findAllPhotos(entityManager, id));
+        response.success("Liste des photos de l'annonce N°" + id, new Annonce().findById(entityManager, id).getPhotoAnnonces());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping(value="/{id}/confirmer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> confirmer(@PathVariable int id){
+        Response response = new Response();
+        response.success("Confirmer d'une annonce", new Annonce().confirmer(entityManager,id));
         return ResponseEntity.ok(response);
     }
 

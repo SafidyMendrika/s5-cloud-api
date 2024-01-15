@@ -95,11 +95,11 @@ VALUES
 ( 1, 'Toyota Camry 2020', 0);
 
 -- Insertion des annonces
-INSERT INTO annonces (idutilisateur, idvoiture, description_annonce, date_validation, date_annonce, etat_annonce)
+INSERT INTO annonces (idutilisateur, idvoiture, description_annonce,prix_annonce, date_validation, date_annonce, etat_annonce)
 VALUES 
-(1, 1, 'Belle voiture compacte à vendre', NULL, '2024-01-12 10:00:00', 0),
-(2, 2, 'Super offre sur cette Honda Civic', '2024-01-12 11:30:00', '2024-01-10 15:45:00', 0),
-(1, 3, 'Toyota Camry à vendre à prix réduit', NULL, '2024-01-11 09:20:00', 0);
+(1, 1, 'Belle voiture compacte à vendre',20000000, NULL, '2024-01-12 10:00:00', 0),
+(2, 2, 'Super offre sur cette Honda Civic',19000000, '2024-01-12 11:30:00', '2024-01-10 15:45:00', 0),
+(1, 3, 'Toyota Camry à vendre à prix réduit',18000000, NULL, '2024-01-11 09:20:00', 0);
 
 -- Insertion des favoris
 INSERT INTO annonces_favorites (idUtilisateur, idAnnonce, etat_favori)

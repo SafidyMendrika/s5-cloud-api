@@ -25,6 +25,14 @@ public class MarqueController {
     private EntityManager entityManager;
 
 
+    @GetMapping(value = "{id}/modeles")
+    public ResponseEntity<Response> findAllModeles(@PathVariable int id){
+        Response response = new Response();
+        response.success("Liste des modèles de la marque "+id, new Marque().findById(entityManager, id).getModeles());
+        return ResponseEntity.ok(response);
+    }
+
+
     @GetMapping
     public ResponseEntity<Response> findAll(){
         Response response = new Response();
