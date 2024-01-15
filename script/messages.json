@@ -1,0 +1,43 @@
+[
+    {
+      "id": 1,
+      "idutilisateur1": 100,
+      "idutilisateur2": 200,
+      "envoyeur": 100,
+      "message": "Salut, comment ça va ?",
+      "date": "2023-01-15T10:30:00"
+    },
+    {
+      "id": 2,
+      "idutilisateur1": 200,
+      "idutilisateur2": 100,
+      "envoyeur": 200,
+      "message": "Bonjour ! Ça va bien, merci. Et toi ?",
+      "date": "2023-01-15T10:35:00"
+    },
+    {
+      "id": 3,
+      "idutilisateur1": 100,
+      "idutilisateur2": 200,
+      "envoyeur": 100,
+      "message": "Ça va bien aussi. Qu'as-tu prévu pour aujourd'hui ?",
+      "date": "2023-01-15T11:00:00"
+    },
+    {
+      "id": 4,
+      "idutilisateur1": 200,
+      "idutilisateur2": 100,
+      "envoyeur": 200,
+      "message": "Rien de spécial, juste du travail. Et toi ?",
+      "date": "2023-01-15T11:15:00"
+    },
+    {
+      "id": 5,
+      "idutilisateur1": 100,
+      "idutilisateur2": 200,
+      "envoyeur": 100,
+      "message": "Pareil, beaucoup de travail. On se parle plus tard !",
+      "date": "2023-01-15T11:30:00"
+    }
+  ]
+  

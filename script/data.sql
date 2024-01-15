@@ -87,15 +87,15 @@ INSERT INTO modeles (idMarque,idCategorie, nom_modele) VALUES
 (1,2, 'Land Cruiser'),
 (1,3, 'Supra');
 
--- Insertion des voitures
-INSERT INTO voitures ( idModele, nom_voiture, etat_voiture)
-VALUES 
-( 1, 'Toyota Corolla 2022', 0),
-( 2, 'Honda Civic 2021', 0),
-( 1, 'Toyota Camry 2020', 0);
+-- -- Insertion des voitures
+-- INSERT INTO voitures ( idModele, nom_voiture, etat_voiture)
+-- VALUES 
+-- ( 1, 'Toyota Corolla 2022', 0),
+-- ( 2, 'Honda Civic 2021', 0),
+-- ( 1, 'Toyota Camry 2020', 0);
 
 -- Insertion des annonces
-INSERT INTO annonces (idutilisateur, idvoiture, description_annonce,prix_annonce, date_validation, date_annonce, etat_annonce)
+INSERT INTO annonces (idutilisateur, idModele, description_annonce,prix_annonce, date_validation, date_annonce, etat_annonce)
 VALUES 
 (1, 1, 'Belle voiture compacte à vendre',20000000, NULL, '2024-01-12 10:00:00', 0),
 (2, 2, 'Super offre sur cette Honda Civic',19000000, '2024-01-12 11:30:00', '2024-01-10 15:45:00', 0),

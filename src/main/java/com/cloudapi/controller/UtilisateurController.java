@@ -2,6 +2,7 @@ package com.cloudapi.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
@@ -22,6 +22,7 @@ import jakarta.persistence.PersistenceContext;
 
 @RestController
 @RequestMapping("/utilisateurs")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UtilisateurController {
     @PersistenceContext
     private EntityManager entityManager;
@@ -77,12 +78,16 @@ public class UtilisateurController {
     }
 
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String modifier(@PathVariable int id, @RequestBody UtilisateurDTO utilisateurDTO){
-        return "modification";
+    public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody UtilisateurDTO utilisateurDTO){
+        Response response = new Response();
+        response.success("Modification d'un utilisateur", new Utilisateur().update(entityManager,id, utilisateurDTO));
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String supprimer(@PathVariable int id, @RequestBody UtilisateurDTO utilisateurDTO){
-        return "supprimer";
-    }
+    public ResponseEntity<Response>  supprimer(@PathVariable int id){
+        Response response = new Response();
+        response.success("Suppression d'un utilisateur", new Utilisateur().delete(entityManager,id));
+        return ResponseEntity.ok(response);
+    }   
 }

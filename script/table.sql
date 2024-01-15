@@ -40,19 +40,19 @@ CREATE TABLE modeles(
 );
 
 
-CREATE TABLE voitures(
-    id_voiture SERIAL PRIMARY KEY,
-    idModele INTEGER REFERENCES modeles(id_modele),
-    nom_voiture VARCHAR(255) NOT NULL,
-    etat_voiture INTEGER DEFAULT 0
-);
+-- CREATE TABLE voitures(
+--     id_voiture SERIAL PRIMARY KEY,
+--     idModele INTEGER REFERENCES modeles(id_modele),
+--     nom_voiture VARCHAR(255) NOT NULL,
+--     etat_voiture INTEGER DEFAULT 0
+-- );
 
 
 
 CREATE TABLE annonces(
     id_annonce SERIAL PRIMARY KEY,
     idUtilisateur INTEGER REFERENCES utilisateurs(id_utilisateur),
-    idVoiture INTEGER REFERENCES voitures (id_voiture),
+    idModele INTEGER REFERENCES modeles (id_modele),
     description_annonce VARCHAR(255) NOT NULL,
     prix_annonce DOUBLE PRECISION NOT NULL,
     date_validation TIMESTAMP,

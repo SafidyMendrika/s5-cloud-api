@@ -58,7 +58,7 @@ public class Session {
         try {
             return (Session) query.getSingleResult();
         } catch (Exception e) {
-            token = generateToken(16);
+            token = generateToken(100);
             code = Integer.valueOf(generateRandomCode(4));
             query.setParameter("code", code);
             query.setParameter("token", token);

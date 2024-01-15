@@ -28,8 +28,8 @@ public class Annonce {
     @Column(name = "id_annonce")
     private int id;
 
-    @Column(name = "idvoiture")
-    private int idVoiture;
+    @Column(name = "idmodele")
+    private int idModele;
 
     @Column(name= "description_annonce")
     private String description;
@@ -41,7 +41,6 @@ public class Annonce {
     @Column(name = "date_validation")
     private LocalDateTime dateValidation;
 
-
     @Column(name = "date_annonce")
     private LocalDateTime dateAnnonce;
 
@@ -52,6 +51,8 @@ public class Annonce {
     @ManyToOne
     @JoinColumn(name ="idutilisateur")
     private Utilisateur utilisateur;
+
+
 
 
 
@@ -97,7 +98,7 @@ public class Annonce {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = """
-                INSERT INTO annonces (idutilisateur, idvoiture, description_annonce, date_validation, date_annonce) VALUES
+                INSERT INTO annonces (idutilisateur, idModele, description_annonce, date_validation, date_annonce) VALUES
                 (?, ?, ?, null, CAST (? AS TIMESTAMP)) RETURNING *
                 """;
         Query query = entityManager.createNativeQuery(sql, Annonce.class);

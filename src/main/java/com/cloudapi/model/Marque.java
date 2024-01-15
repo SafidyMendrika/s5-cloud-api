@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Query;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 
@@ -34,6 +35,9 @@ public class Marque {
     @OneToMany(mappedBy = "marque")
     private List<Modele> modeles;
 
+    @Transient
+    private int nombreModele;
+
 
     public List<Modele> getModeles() {
         return modeles.stream()
@@ -46,7 +50,11 @@ public class Marque {
     public List<Marque> findAll(EntityManager entityManager){
         String sql = "SELECT * FROM marques where etat_marque>=0";
         Query query = entityManager.createNativeQuery(sql, Marque.class);
-        return (List<Marque>) query.getResultList();
+        List<Marque> marques = (List<Marque>) query.getResultList();
+        for (Marque marque : marques) {
+            marque.setNombreModele(marque.getModeles().size());
+        }
+        return marques;
     }
 
 
