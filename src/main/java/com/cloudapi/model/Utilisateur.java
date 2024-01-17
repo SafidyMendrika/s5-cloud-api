@@ -1,15 +1,23 @@
 package com.cloudapi.model;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
+import com.cloudapi.security.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Query;
@@ -20,7 +28,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "utilisateurs")
-public class Utilisateur {
+public class Utilisateur implements UserDetails {
     @Id
     @Column(name = "id_utilisateur")
     private int id;
@@ -47,6 +55,11 @@ public class Utilisateur {
     @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
     private List<AnnonceFavorite> annonceFavorites;
+
+
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
     public List<Annonce> getAnnonceFavorites(){
@@ -126,6 +139,53 @@ public class Utilisateur {
         query.setParameter(1, id);
         return (Utilisateur) query.getSingleResult();
     }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    
+
+
+    
 
 
 

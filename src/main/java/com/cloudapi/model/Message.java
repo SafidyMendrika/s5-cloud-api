@@ -11,7 +11,7 @@ import lombok.Data;
 @Document(collection = "messages")
 public class Message {
     @Id
-    private int id;
+    private String id;
     private int idutilisateur1;
     private int idutilisateur2;
     private int envoyeur;

@@ -6,30 +6,28 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cloudapi.json.Response;
+import com.cloudapi.service.MessageService;
 
+@Service
 @RestController
 @RequestMapping("/messages")
 public class MessageController {
 
+    @Autowired
+    private MessageService messageService;
 
-    
-    // @Autowired
-    private MongoTemplate mongoTemplate;
-
-
-
-    @GetMapping(value = "{id1}/{id2}")
-    public ResponseEntity<Response> getMessages(@PathVariable int id1, @PathVariable int id2){
+    @GetMapping
+    public ResponseEntity<Response> getMessages(@RequestParam("iduser1") int id1, @RequestParam("iduser2") int id2){
         Response rep = new Response();
-        Query query = new Query(Criteria.where("idutilisateur1").in(id1,id2)
-                                .and("idutilisateur2").in(id1,id2));
-        rep.success("Messages reçus", mongoTemplate.find(query, Message.class));
+        rep.success("Messages reçus", messageService.findBetweenUsers(id1, id2));
         return ResponseEntity.ok(rep);
     }
     
