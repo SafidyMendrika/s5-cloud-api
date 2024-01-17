@@ -10,22 +10,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfiguration {
     
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http
-            .csrf()
-            .disable()
-            .authorizeHttpRequests()
-            .requestMatchers("")
-            .permitAll()
-            .anyRequest()
-            .authenticated()
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authenticationProvider(authenticationProvider)
-            .addFilter(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    //     http
+    //         .csrf()
+    //         .disable()
+    //         .authorizeHttpRequests()
+    //         .requestMatchers("")
+    //         .permitAll()
+    //         .anyRequest()
+    //         .authenticated()
+    //         .and()
+    //         .sessionManagement()
+    //         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+    //         .and()
+    //         .authenticationProvider(authenticationProvider)
+    //         .addFilter(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+    //     return http.build();
+    // }
 }
