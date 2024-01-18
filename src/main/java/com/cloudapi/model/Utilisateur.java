@@ -18,18 +18,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Query;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 
 @Data
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "utilisateurs")
 public class Utilisateur implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_utilisateur")
     private int id;
 
@@ -42,8 +49,6 @@ public class Utilisateur implements UserDetails {
     @Column(name = "password_utilisateur")
     private String password;
 
-    @Column(name = "statut_utilisateur")
-    private int statut;
 
     @Column(name = "etat_utilisateur")
     private int etat;
@@ -56,10 +61,16 @@ public class Utilisateur implements UserDetails {
     @OneToMany(mappedBy = "utilisateur")
     private List<AnnonceFavorite> annonceFavorites;
 
-
-
-    @Enumerated(EnumType.STRING)
+    @Column(name = "statut_utilisateur")
+    @Enumerated(EnumType.ORDINAL)
     private Role role;
+
+
+    
+
+
+    public Utilisateur() {
+    }
 
 
     public List<Annonce> getAnnonceFavorites(){
