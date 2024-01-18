@@ -1,5 +1,6 @@
 package com.cloudapi.controller;
 
+import org.springframework.context.annotation.Role;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +27,7 @@ public class CategorieController {
     @PersistenceContext
     private EntityManager entityManager;
 
-
+    
     @GetMapping
     public ResponseEntity<Response> findAll(){
         Response response = new Response();
