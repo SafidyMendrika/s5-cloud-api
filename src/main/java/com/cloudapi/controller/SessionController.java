@@ -16,7 +16,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @RestController
-@RequestMapping("/sessions")
+@RequestMapping("/api/sessions")
 public class SessionController {
     @PersistenceContext
     private EntityManager entityManager;

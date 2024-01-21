@@ -10,26 +10,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
-import com.cloudapi.security.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Query;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 
 @Data
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "utilisateurs")
 public class Utilisateur implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_utilisateur")
     private int id;
 
@@ -42,8 +46,6 @@ public class Utilisateur implements UserDetails {
     @Column(name = "password_utilisateur")
     private String password;
 
-    @Column(name = "statut_utilisateur")
-    private int statut;
 
     @Column(name = "etat_utilisateur")
     private int etat;
@@ -56,10 +58,15 @@ public class Utilisateur implements UserDetails {
     @OneToMany(mappedBy = "utilisateur")
     private List<AnnonceFavorite> annonceFavorites;
 
+    @Column(name = "statut_utilisateur")
+    private int role;
 
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    
+
+
+    public Utilisateur() {
+    }
 
 
     public List<Annonce> getAnnonceFavorites(){
@@ -100,7 +107,7 @@ public class Utilisateur implements UserDetails {
         return (List<Utilisateur>) query.getResultList();
     }
 
-
+    
     public Utilisateur findById(EntityManager entityManager, int id){
         String sql = "SELECT * FROM utilisateurs where id_utilisateur=?";
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
@@ -141,9 +148,21 @@ public class Utilisateur implements UserDetails {
     }
 
 
+    public String getRole(){
+        switch (role) {
+            case 0:
+                return "USER";
+            case 10:
+                return "ADMIN";
+            default:
+                return "USER";
+        }
+    }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_"+getRole()));
     }
 
 

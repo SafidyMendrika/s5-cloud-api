@@ -20,7 +20,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @RestController
-@RequestMapping("/annonces")
+@RequestMapping("/api/annonces")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AnnonceController {
     @PersistenceContext
