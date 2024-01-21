@@ -2,19 +2,19 @@ package com.cloudapi.controller;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cloudapi.dto.CategorieDTO;
-import com.cloudapi.model.Categorie;
+
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/api/test")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TestController {
     
@@ -23,10 +23,17 @@ public class TestController {
     private EntityManager entityManager;
 
 
-    @GetMapping("test")
-    public ResponseEntity<Categorie> test(){
-        CategorieDTO categorieDTO = new CategorieDTO();
-        categorieDTO.setNom("4L2");
-        return ResponseEntity.ok(new Categorie().delete(entityManager,7));
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public ResponseEntity<String> test(){
+        return ResponseEntity.ok("Hello Admin");
     }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/test-user")
+    public ResponseEntity<String> testUser(){
+        return ResponseEntity.ok("Hello User");
+    }
+
+
 }

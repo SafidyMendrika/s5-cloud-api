@@ -10,14 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
-import com.cloudapi.security.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -62,8 +59,7 @@ public class Utilisateur implements UserDetails {
     private List<AnnonceFavorite> annonceFavorites;
 
     @Column(name = "statut_utilisateur")
-    @Enumerated(EnumType.ORDINAL)
-    private Role role;
+    private int role;
 
 
     
@@ -111,7 +107,7 @@ public class Utilisateur implements UserDetails {
         return (List<Utilisateur>) query.getResultList();
     }
 
-
+    
     public Utilisateur findById(EntityManager entityManager, int id){
         String sql = "SELECT * FROM utilisateurs where id_utilisateur=?";
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
@@ -152,9 +148,21 @@ public class Utilisateur implements UserDetails {
     }
 
 
+    public String getRole(){
+        switch (role) {
+            case 0:
+                return "USER";
+            case 10:
+                return "ADMIN";
+            default:
+                return "USER";
+        }
+    }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_"+getRole()));
     }
 
 

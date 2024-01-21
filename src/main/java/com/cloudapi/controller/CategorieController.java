@@ -1,6 +1,6 @@
 package com.cloudapi.controller;
 
-import org.springframework.context.annotation.Role;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +21,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategorieController {
     @PersistenceContext
