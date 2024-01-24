@@ -16,6 +16,24 @@ CREATE TABLE utilisateurs(
     etat_utilisateur INTEGER DEFAULT 0
 );
 
+CREATE TABLE energies(
+    id_energie SERIAL PRIMARY KEY,
+    nom_energie VARCHAR(255) NOT NULL,
+    etat_energie INTEGER DEFAULT 0
+);
+
+CREATE TABLE vitesses(
+    id_vitesse SERIAL PRIMARY KEY,
+    nom_vitesse VARCHAR(255) NOT NULL,
+    etat_vitesse INTEGER DEFAULT 0
+);
+
+CREATE TABLE moteurs(
+    id_moteur SERIAL PRIMARY KEY,
+    nom_moteur VARCHAR(255) NOT NULL,
+    etat_moteur INTEGER DEFAULT 0
+);
+
 
 CREATE TABLE categories(
     id_categorie SERIAL PRIMARY KEY,
