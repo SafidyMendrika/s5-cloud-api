@@ -29,7 +29,7 @@ CREATE TABLE marques(
     nom_marque VARCHAR(255) NOT NULL,
     etat_marque INTEGER DEFAULT 0
 );
-
+    
 
 CREATE TABLE modeles(
     id_modele SERIAL PRIMARY KEY,
@@ -46,7 +46,6 @@ CREATE TABLE modeles(
 --     nom_voiture VARCHAR(255) NOT NULL,
 --     etat_voiture INTEGER DEFAULT 0
 -- );
-
 
 
 CREATE TABLE annonces(
@@ -85,7 +84,3 @@ CREATE TABLE sessions(
     token VARCHAR(255) UNIQUE,
     date_expiration TIMESTAMP NOT NULL
 );
-
-
-
-
