@@ -21,7 +21,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @RestController
-@RequestMapping("/modeles")
+@RequestMapping("/api/modeles")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ModeleController {
     @PersistenceContext

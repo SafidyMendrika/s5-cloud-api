@@ -2,7 +2,6 @@ package com.cloudapi.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,6 @@ import com.cloudapi.security.AuthenticationRequest;
 import com.cloudapi.security.AuthenticationResponse;
 import com.cloudapi.security.JwtService;
 import com.cloudapi.security.RegisterRequest;
-import com.cloudapi.security.Role;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,7 +31,7 @@ public class AuthenticationService {
             .nom(request.getNom())
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getMdp()))
-            .role(Role.USER)
+            .role(0)
             .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);

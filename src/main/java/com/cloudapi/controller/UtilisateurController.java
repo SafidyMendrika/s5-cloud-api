@@ -21,7 +21,7 @@ import jakarta.persistence.PersistenceContext;
 
 
 @RestController
-@RequestMapping("/utilisateurs")
+@RequestMapping("/api/utilisateurs")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UtilisateurController {
     @PersistenceContext

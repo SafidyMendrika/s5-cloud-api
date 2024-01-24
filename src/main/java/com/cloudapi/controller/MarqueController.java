@@ -19,7 +19,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @RestController
-@RequestMapping("/marques")
+@RequestMapping("/api/marques")
 public class MarqueController {
     @PersistenceContext
     private EntityManager entityManager;
