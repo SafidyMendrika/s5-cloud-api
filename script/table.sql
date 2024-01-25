@@ -45,6 +45,7 @@ CREATE TABLE categories(
 CREATE TABLE marques(
     id_marque SERIAL PRIMARY KEY,
     nom_marque VARCHAR(255) NOT NULL,
+    lien_logo VARCHAR(255) NOT NULL,
     etat_marque INTEGER DEFAULT 0
 );
     
@@ -70,13 +71,21 @@ CREATE TABLE annonces(
     id_annonce SERIAL PRIMARY KEY,
     idUtilisateur INTEGER REFERENCES utilisateurs(id_utilisateur),
     idModele INTEGER REFERENCES modeles (id_modele),
-    description_annonce VARCHAR(255) NOT NULL,
+    description_annonce TEXT NOT NULL,
     prix_annonce DOUBLE PRECISION NOT NULL,
     date_validation TIMESTAMP,
     date_annonce TIMESTAMP NOT NULL,
+    idEnergie INT REFERENCES energies(id_energie),
+    idVitesse INT REFERENCES vitesses(id_vitesse),
+    idMoteur INT REFERENCES moteurs(id_moteur),
     etat_annonce INTEGER DEFAULT 0
 );
 
+CREATE TABLE commissions(
+    id_commission SERIAL PRIMARY KEY,
+    commission DECIMAL(10,2) NOT NULL ,
+    date_insertion TIMESTAMP NOT NULL
+);
 
 CREATE TABLE photos_annonces(
     id_photo SERIAL PRIMARY KEY,
@@ -93,12 +102,3 @@ CREATE TABLE annonces_favorites(
     etat_favori INTEGER DEFAULT 0
 );
 
-
-
-CREATE TABLE sessions(
-    id_session SERIAL PRIMARY KEY,
-    idUtilisateur INTEGER REFERENCES utilisateurs(id_utilisateur),
-    code INTEGER UNIQUE,
-    token VARCHAR(255) UNIQUE,
-    date_expiration TIMESTAMP NOT NULL
-);
