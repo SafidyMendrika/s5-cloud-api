@@ -87,5 +87,12 @@ CREATE TABLE sessions(
 );
 
 
+CREATE TABLE commissions(
+    id_commission SERIAL PRIMARY KEY,
+    valeur_commission DOUBLE PRECISION NOT NULL,
+    date_insertion TIMESTAMP NOT NULL
+);
+
+
 
 
