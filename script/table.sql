@@ -59,12 +59,6 @@ CREATE TABLE modeles(
 );
 
 
--- CREATE TABLE voitures(
---     id_voiture SERIAL PRIMARY KEY,
---     idModele INTEGER REFERENCES modeles(id_modele),
---     nom_voiture VARCHAR(255) NOT NULL,
---     etat_voiture INTEGER DEFAULT 0
--- );
 
 
 CREATE TABLE annonces(
