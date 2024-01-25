@@ -16,6 +16,24 @@ CREATE TABLE utilisateurs(
     etat_utilisateur INTEGER DEFAULT 0
 );
 
+CREATE TABLE energies(
+    id_energie SERIAL PRIMARY KEY,
+    nom_energie VARCHAR(255) NOT NULL,
+    etat_energie INTEGER DEFAULT 0
+);
+
+CREATE TABLE vitesses(
+    id_vitesse SERIAL PRIMARY KEY,
+    nom_vitesse VARCHAR(255) NOT NULL,
+    etat_vitesse INTEGER DEFAULT 0
+);
+
+CREATE TABLE moteurs(
+    id_moteur SERIAL PRIMARY KEY,
+    nom_moteur VARCHAR(255) NOT NULL,
+    etat_moteur INTEGER DEFAULT 0
+);
+
 
 CREATE TABLE categories(
     id_categorie SERIAL PRIMARY KEY,
@@ -27,9 +45,10 @@ CREATE TABLE categories(
 CREATE TABLE marques(
     id_marque SERIAL PRIMARY KEY,
     nom_marque VARCHAR(255) NOT NULL,
+    lien_logo VARCHAR(255) NOT NULL,
     etat_marque INTEGER DEFAULT 0
 );
-
+    
 
 CREATE TABLE modeles(
     id_modele SERIAL PRIMARY KEY,
@@ -40,26 +59,27 @@ CREATE TABLE modeles(
 );
 
 
--- CREATE TABLE voitures(
---     id_voiture SERIAL PRIMARY KEY,
---     idModele INTEGER REFERENCES modeles(id_modele),
---     nom_voiture VARCHAR(255) NOT NULL,
---     etat_voiture INTEGER DEFAULT 0
--- );
-
 
 
 CREATE TABLE annonces(
     id_annonce SERIAL PRIMARY KEY,
     idUtilisateur INTEGER REFERENCES utilisateurs(id_utilisateur),
     idModele INTEGER REFERENCES modeles (id_modele),
-    description_annonce VARCHAR(255) NOT NULL,
+    description_annonce TEXT NOT NULL,
     prix_annonce DOUBLE PRECISION NOT NULL,
     date_validation TIMESTAMP,
     date_annonce TIMESTAMP NOT NULL,
+    idEnergie INT REFERENCES energies(id_energie),
+    idVitesse INT REFERENCES vitesses(id_vitesse),
+    idMoteur INT REFERENCES moteurs(id_moteur),
     etat_annonce INTEGER DEFAULT 0
 );
 
+CREATE TABLE commissions(
+    id_commission SERIAL PRIMARY KEY,
+    commission DECIMAL(10,2) NOT NULL ,
+    date_insertion TIMESTAMP NOT NULL
+);
 
 CREATE TABLE photos_annonces(
     id_photo SERIAL PRIMARY KEY,
@@ -76,22 +96,6 @@ CREATE TABLE annonces_favorites(
     etat_favori INTEGER DEFAULT 0
 );
 
-
-
-CREATE TABLE sessions(
-    id_session SERIAL PRIMARY KEY,
-    idUtilisateur INTEGER REFERENCES utilisateurs(id_utilisateur),
-    code INTEGER UNIQUE,
-    token VARCHAR(255) UNIQUE,
-    date_expiration TIMESTAMP NOT NULL
-);
-
-
-CREATE TABLE commissions(
-    id_commission SERIAL PRIMARY KEY,
-    valeur_commission DOUBLE PRECISION NOT NULL,
-    date_insertion TIMESTAMP NOT NULL
-);
 
 
 
