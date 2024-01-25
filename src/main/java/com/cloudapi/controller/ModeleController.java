@@ -2,6 +2,7 @@ package com.cloudapi.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,8 @@ public class ModeleController {
         response.success("Liste des modèles", new Modele().findAll(entityManager));
         return ResponseEntity.ok(response);
     }
-
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> insert(@RequestBody ModeleDTO modeleDTO){
         Response response = new Response();
@@ -42,6 +44,7 @@ public class ModeleController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody ModeleDTO modeleDTO){
         Response response = new Response();
@@ -49,6 +52,8 @@ public class ModeleController {
         return ResponseEntity.ok(response);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  supprimer(@PathVariable int id){
         Response response = new Response();

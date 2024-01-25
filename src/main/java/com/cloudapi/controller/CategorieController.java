@@ -3,6 +3,7 @@ package com.cloudapi.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,6 @@ public class CategorieController {
     @PersistenceContext
     private EntityManager entityManager;
 
-    
     @GetMapping
     public ResponseEntity<Response> findAll(){
         Response response = new Response();
@@ -35,6 +35,8 @@ public class CategorieController {
         return ResponseEntity.ok(response);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> insert(@RequestBody CategorieDTO categorieDTO){
         Response response = new Response();
@@ -42,14 +44,16 @@ public class CategorieController {
         return ResponseEntity.ok(response);
     }
 
-
-   @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody CategorieDTO categorieDTO){
         Response response = new Response();
         response.success("Modification d'une Categorie", new Categorie().update(entityManager,id, categorieDTO));
         return ResponseEntity.ok(response);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  supprimer(@PathVariable int id){
         Response response = new Response();
