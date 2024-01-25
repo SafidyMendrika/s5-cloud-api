@@ -6,4 +6,5 @@ import lombok.Data;
 public class MarqueDTO {
     private int id;
     private String nom;
+    private String lien;
 }

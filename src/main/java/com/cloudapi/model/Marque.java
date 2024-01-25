@@ -28,6 +28,10 @@ public class Marque {
     @Column(name = "nom_marque")
     private String nom;
 
+
+    @Column(name = "lien_logo")
+    private String lien;
+
     @Column(name="etat_marque")
     private int etat;
 
@@ -68,11 +72,12 @@ public class Marque {
 
     public Marque insert(EntityManager entityManager, MarqueDTO marqueDTO){
         String sql = """
-                INSERT INTO Marques (nom_marque) VALUES
-                (?) RETURNING *
+                INSERT INTO Marques (nom_marque, lien_logo) VALUES
+                (?, ?) RETURNING *
                 """;
         Query query = entityManager.createNativeQuery(sql, Marque.class);
         query.setParameter(1, marqueDTO.getNom());
+        query.setParameter(2, marqueDTO.getLien());
         return (Marque) query.getSingleResult();
     }
 
