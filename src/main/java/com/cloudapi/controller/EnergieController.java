@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cloudapi.dto.MarqueDTO;
-import com.cloudapi.dto.MoteurDTO;
+import com.cloudapi.dto.EnergieDTO;
 import com.cloudapi.json.Response;
 import com.cloudapi.model.Marque;
-import com.cloudapi.model.Moteur;
+import com.cloudapi.model.Energie;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @RestController
-@RequestMapping("/api/moteurs")
-public class MoteurController {
+@RequestMapping("/api/energies")
+public class EnergieController {
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -34,7 +34,7 @@ public class MoteurController {
     public ResponseEntity<Response> findAll(){
         Response response = new Response();
         try {
-            response.success("Liste des moteurs", new Moteur().findAll(entityManager));
+            response.success("Liste des Energies", new Energie().findAll(entityManager));
             
         }catch(JDBCException jdbce){
             response.error(new Exception("Erreur lors de l'insertino"));
@@ -47,10 +47,10 @@ public class MoteurController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> insert(@RequestBody MoteurDTO moteurDTO){
+    public ResponseEntity<Response> insert(@RequestBody EnergieDTO EnergieDTO){
         Response response = new Response();
         try {
-            response.success("Insertion d'un moteur", new Moteur().insert(entityManager, moteurDTO));
+            response.success("Insertion d'un Energie", new Energie().insert(entityManager, EnergieDTO));
             
         }catch(JDBCException jdbce){
             response.error(new Exception("erreur d'insertion"));
@@ -63,16 +63,16 @@ public class MoteurController {
 
 
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody MoteurDTO moteurDTO){
+    public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody EnergieDTO EnergieDTO){
         Response response = new Response();
-        response.success("Modification d'un moteur", new Moteur().update(entityManager,id, moteurDTO));
+        response.success("Modification d'un Energie", new Energie().update(entityManager,id, EnergieDTO));
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  supprimer(@PathVariable int id){
         Response response = new Response();
-        response.success("Suppression d'un moteur", new Moteur().delete(entityManager,id));
+        response.success("Suppression d'un Energie", new Energie().delete(entityManager,id));
         return ResponseEntity.ok(response);
     }       
 }
