@@ -2,6 +2,7 @@ package com.cloudapi.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ public class AnnonceController {
         return ResponseEntity.ok(response);
     }
 
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> insert(@RequestBody AnnonceDTO annonceDTO){
         Response response = new Response();
@@ -62,6 +64,7 @@ public class AnnonceController {
         response.success("Modification d'une annonce", new Annonce().update(entityManager,id, annonceDTO));
         return ResponseEntity.ok(response);
     }
+
 
     @DeleteMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  supprimer(@PathVariable int id){

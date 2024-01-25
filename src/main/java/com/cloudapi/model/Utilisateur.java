@@ -84,21 +84,21 @@ public class Utilisateur implements UserDetails {
 
 
 
-    @SuppressWarnings(value = "unchecked")
-    public Response verificationLogin(EntityManager entityManager,String email, String mdp)throws Exception{
-        Response rep = new Response();
-        String sql = "SELECT * FROM utilisateurs where email_utilisateur= :email and password_utilisateur = :mdp";
-        Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
-        query.setParameter("email", email);
-        query.setParameter("mdp", mdp);
-        List<Utilisateur> users = (List<Utilisateur>) query.getResultList();
-        if (users.size()==0){
-            throw new Exception("Mot de passe ou email invalide");
-        }
-        Session session = new Session().insert(entityManager, users.get(0).id);
-        rep.success("Connection avec succès",session);
-        return rep;
-    }
+    // @SuppressWarnings(value = "unchecked")
+    // public Response verificationLogin(EntityManager entityManager,String email, String mdp)throws Exception{
+    //     Response rep = new Response();
+    //     String sql = "SELECT * FROM utilisateurs where email_utilisateur= :email and password_utilisateur = :mdp";
+    //     Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
+    //     query.setParameter("email", email);
+    //     query.setParameter("mdp", mdp);
+    //     List<Utilisateur> users = (List<Utilisateur>) query.getResultList();
+    //     if (users.size()==0){
+    //         throw new Exception("Mot de passe ou email invalide");
+    //     }
+    //     Session session = new Session().insert(entityManager, users.get(0).id);
+    //     rep.success("Connection avec succès",session);
+    //     return rep;
+    // }
 
     @SuppressWarnings(value = "unchecked")
     public List<Utilisateur> findAll(EntityManager entityManager){

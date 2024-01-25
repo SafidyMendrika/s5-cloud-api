@@ -23,6 +23,19 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration {
     
 
+    private static String[] WHITE_LIST_GET = {
+        "api/annonces",
+        "api/categories",
+        "api/marques",
+        "api/modeles",
+        "api/utilisateurs"
+    };
+
+    private static String[] WHITE_LIST_POST = {
+        "api/utilisateurs",
+        "api/utilisateurs/login"
+    };
+
     private final JwtAuthentificationFilter jwtAuthFilter;
 
     private final AuthenticationProvider authenticationProvider;
@@ -33,13 +46,9 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf
                     .disable())
             .authorizeHttpRequests(requests -> requests
-                    .requestMatchers(HttpMethod.POST,"api/utilisateurs")
+                    .requestMatchers(HttpMethod.GET,WHITE_LIST_GET)
                     .permitAll()
-                    .requestMatchers(HttpMethod.POST,"api/utilisateurs/login")
-                    .permitAll()
-                    .requestMatchers(HttpMethod.PUT, "api/utilisateurs")
-                    .permitAll()
-                    .requestMatchers(HttpMethod.GET, "api/annonces")
+                    .requestMatchers(HttpMethod.POST,WHITE_LIST_POST)
                     .permitAll()
                     .requestMatchers("/api/auth/**")
                     .permitAll()
