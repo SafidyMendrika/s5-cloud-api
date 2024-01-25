@@ -46,12 +46,12 @@ public class UtilisateurController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
-        Response response = new Response();
-        response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
-        return ResponseEntity.ok(response);
-    }
+    // @PostMapping(value = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
+    //     Response response = new Response();
+    //     response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
+    //     return ResponseEntity.ok(response);
+    // }
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "login")
@@ -78,7 +78,11 @@ public class UtilisateurController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> insert(@RequestBody UtilisateurDTO utilisateurDTO){
         Response response = new Response();
-        response.success("Insertion d'un utilisateur", new Utilisateur().insert(entityManager, utilisateurDTO));
+        try {
+            response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
+        } catch (Exception e) {
+            response.error(new Exception("Erreur lors de l'insertion d'un utilisateur"));
+        }
         return ResponseEntity.ok(response);
     }
 
