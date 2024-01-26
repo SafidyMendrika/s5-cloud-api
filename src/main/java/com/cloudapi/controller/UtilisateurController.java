@@ -15,17 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
 import com.cloudapi.model.Utilisateur;
+import com.cloudapi.service.AuthenticationService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
 
 
 @RestController
 @RequestMapping("/api/utilisateurs")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequiredArgsConstructor
 public class UtilisateurController {
     @PersistenceContext
     private EntityManager entityManager;
+
+    private final AuthenticationService service;
 
     @GetMapping(value = "{id}/annonces-favorites")
     public ResponseEntity<Response> findAllAnnoncesFavorites(@PathVariable int id){
@@ -41,22 +46,22 @@ public class UtilisateurController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
-        Response response = new Response();
-        response.success("Inscription d'un utilisateur", new Utilisateur().insert(entityManager, utilisateurDTO));
-        return ResponseEntity.ok(response);
-    }
+    // @PostMapping(value = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
+    //     Response response = new Response();
+    //     response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
+    //     return ResponseEntity.ok(response);
+    // }
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "login")
     public ResponseEntity<Response> login(@RequestBody UtilisateurDTO utilisateurDTO){
         Response rep = new Response();
         try {
-            rep = new Utilisateur().verificationLogin(entityManager, utilisateurDTO.getEmail(), utilisateurDTO.getMdp());
+            rep.success("Login d'un utilisateur", service.authenticate(utilisateurDTO));
             return ResponseEntity.ok(rep);
         } catch (Exception e) {
-            rep.error(e);
+            rep.error(new Exception("Email ou mot de passe incorrect"));
         }
         return ResponseEntity.ok(rep);
        
@@ -73,7 +78,11 @@ public class UtilisateurController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> insert(@RequestBody UtilisateurDTO utilisateurDTO){
         Response response = new Response();
-        response.success("Insertion d'un utilisateur", new Utilisateur().insert(entityManager, utilisateurDTO));
+        try {
+            response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
+        } catch (Exception e) {
+            response.error(new Exception("Erreur lors de l'insertion d'un utilisateur"));
+        }
         return ResponseEntity.ok(response);
     }
 
