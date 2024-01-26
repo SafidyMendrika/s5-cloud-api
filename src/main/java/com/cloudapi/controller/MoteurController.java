@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.hibernate.JDBCException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import jakarta.persistence.PersistenceContext;
 
 @RestController
 @RequestMapping("/api/moteurs")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MoteurController {
     @PersistenceContext
     private EntityManager entityManager;
