@@ -40,7 +40,8 @@ public class BeneficeController {
             date1 = Date.valueOf(dateA);
             date2 = Date.valueOf(dateB);
         } catch (Exception e) {
-
+            response.error(new Exception("Date invalide"));
+            return ResponseEntity.ok(response);
         }
 
         response.success("Benefices ", new Benefice().getRealBenefice(entityManager,date1,date2));
