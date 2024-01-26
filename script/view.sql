@@ -34,12 +34,6 @@ CREATE OR REPLACE VIEW v_count_annonce_join_vendu AS
         (select * from v_count_annonce) as annonces,
         (select * from v_count_annonce_vendu) as vendus;
    
-CREATE TABLE annonces_favorites(
-    id_favori SERIAL PRIMARY KEY,
-    idUtilisateur INTEGER ,
-    idAnnonce INTEGER ,
-    etat_favori INTEGER DEFAULT 0
-);
 
 -- top annonces favorites
 
