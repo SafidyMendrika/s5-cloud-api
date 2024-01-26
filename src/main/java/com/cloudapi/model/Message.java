@@ -1,5 +1,7 @@
 package com.cloudapi.model;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
@@ -8,13 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
-@Document(collection = "messages")
 public class Message {
-    @Id
-    private String id;
-    private int idutilisateur1;
-    private int idutilisateur2;
-    private int envoyeur;
-    private String message;
-    private LocalDateTime date;
+    private MessageUtilisateur user;
+    private String content;
+    private String date_envoie = Timestamp.valueOf(LocalDateTime.now()).toString() ;
 }

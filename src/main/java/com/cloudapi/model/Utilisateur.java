@@ -62,8 +62,15 @@ public class Utilisateur implements UserDetails {
     private int role;
 
 
-    
+    public MessageUtilisateur toMessageUtilisateur(){
+        MessageUtilisateur messageUtilisateur = new MessageUtilisateur();
 
+        messageUtilisateur.setId_utilisateur(this.getId());
+        messageUtilisateur.setMail_utilisateur(this.getEmail());
+        messageUtilisateur.setNom_utilisateur(this.getNom());
+
+        return  messageUtilisateur;
+    }
 
     public Utilisateur() {
     }
@@ -108,7 +115,7 @@ public class Utilisateur implements UserDetails {
     }
 
     
-    public Utilisateur findById(EntityManager entityManager, int id){
+    public  static Utilisateur findById(EntityManager entityManager, int id){
         String sql = "SELECT * FROM utilisateurs where id_utilisateur=?";
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
         query.setParameter(1, id);
