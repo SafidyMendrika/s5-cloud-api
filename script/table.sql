@@ -96,3 +96,10 @@ CREATE TABLE annonces_favorites(
     etat_favori INTEGER DEFAULT 0
 );
 
+
+CREATE TABLE benefices(
+    id_benefice SERIAL PRIMARY KEY,
+    benefice DECIMAL(10,2),
+    idAnnonce INT REFERENCES annonces(id_annonce),
+    date TIMESTAMP
+);

@@ -9,3 +9,4 @@ DROP TABLE IF EXISTS moteurs;
 DROP TABLE IF EXISTS vitesses;
 DROP TABLE IF EXISTS energies;
 DROP TABLE IF EXISTS utilisateurs;
+DROP TABLE IF EXISTS benefices;
