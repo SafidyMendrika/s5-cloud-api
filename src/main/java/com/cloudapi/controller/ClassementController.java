@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cloudapi.dto.AnnonceDTO;
 import com.cloudapi.json.Response;
-import com.cloudapi.model.Annonce;
-import com.cloudapi.model.Benefice;
 import com.cloudapi.model.ClassementAnnonce;
 
 import jakarta.persistence.EntityManager;
