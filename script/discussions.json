@@ -1,0 +1,105 @@
+[
+  {
+    "id_discussion" : 1,
+    "user_a" : {
+        "id_utilisateur" : 100,
+        "mail_utilisateur" : "mendrika@gmail.com",
+        "nom_utilisateur" : "Safidy Mendrika"
+    },
+    "user_b" : {
+        "id_utilisateur" : 150,
+        "mail_utilisateur" : "mirija@gmail.com",
+        "nom_utilisateur" : "Mirija Marc"
+    },
+    "date_creation" : "2024/01/26 10:00",
+    "messages" : [
+      {
+        "user" : {
+            "id_utilisateur" : 100,
+            "mail_utilisateur" : "mendrika@gmail.com",
+            "nom_utilisateur" : "Safidy Mendrika"
+        },
+        "content" : "Bonjour namana , inona ny vaovao any aminao",
+        "date_envoie" : "2024/01/26 10:02"
+      }  ,
+      {
+        "user" : {
+            "id_utilisateur" : 150,
+            "mail_utilisateur" : "mirija@gmail.com",
+            "nom_utilisateur" : "Mirija Marc"
+        },
+        "content" : "Salama badoude",
+        "date_envoie" : "2024/01/26 10:03"
+      }  
+    ]
+
+},{
+  "id_discussion" : 1,
+  "user_a" : {
+      "id_utilisateur" : 100,
+      "mail_utilisateur" : "mendrika@gmail.com",
+      "nom_utilisateur" : "Safidy Mendrika"
+  },
+  "user_b" : {
+      "id_utilisateur" : 150,
+      "mail_utilisateur" : "mirija@gmail.com",
+      "nom_utilisateur" : "Mirija Marc"
+  },
+  "date_creation" : "2024/01/26 10:00",
+  "messages" : [
+    {
+      "user" : {
+          "id_utilisateur" : 100,
+          "mail_utilisateur" : "mendrika@gmail.com",
+          "nom_utilisateur" : "Safidy Mendrika"
+      },
+      "content" : "Bonjour namana , inona ny vaovao any aminao",
+      "date_envoie" : "2024/01/26 10:02"
+    }  ,
+    {
+      "user" : {
+          "id_utilisateur" : 150,
+          "mail_utilisateur" : "mirija@gmail.com",
+          "nom_utilisateur" : "Mirija Marc"
+      },
+      "content" : "Salama badoude",
+      "date_envoie" : "2024/01/26 10:03"
+    }  
+  ]
+
+},{
+  "id_discussion" : 1,
+  "user_a" : {
+      "id_utilisateur" : 100,
+      "mail_utilisateur" : "mendrika@gmail.com",
+      "nom_utilisateur" : "Safidy Mendrika"
+  },
+  "user_b" : {
+      "id_utilisateur" : 150,
+      "mail_utilisateur" : "mirija@gmail.com",
+      "nom_utilisateur" : "Mirija Marc"
+  },
+  "date_creation" : "2024/01/26 10:00",
+  "messages" : [
+    {
+      "user" : {
+          "id_utilisateur" : 100,
+          "mail_utilisateur" : "mendrika@gmail.com",
+          "nom_utilisateur" : "Safidy Mendrika"
+      },
+      "content" : "Bonjour namana , inona ny vaovao any aminao",
+      "date_envoie" : "2024/01/26 10:02"
+    }  ,
+    {
+      "user" : {
+          "id_utilisateur" : 150,
+          "mail_utilisateur" : "mirija@gmail.com",
+          "nom_utilisateur" : "Mirija Marc"
+      },
+      "content" : "Salama badoude",
+      "date_envoie" : "2024/01/26 10:03"
+    }  
+  ]
+
+}
+]

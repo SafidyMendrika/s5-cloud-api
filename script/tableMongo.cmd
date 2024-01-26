@@ -1,1 +1,1 @@
-db.createCollection("annonces");
+db.createCollection("discussions");

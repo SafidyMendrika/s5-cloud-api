@@ -69,6 +69,11 @@
 			<scope>runtime</scope>
 		</dependency>
 		<!-- atreo commentena raha hanao test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
 
 
 		<dependency>
