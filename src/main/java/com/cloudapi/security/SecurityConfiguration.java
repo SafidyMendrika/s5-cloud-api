@@ -33,7 +33,18 @@ public class SecurityConfiguration {
 
     private static String[] WHITE_LIST_POST = {
         "api/utilisateurs",
-        "api/utilisateurs/login"
+        "api/utilisateurs/login",
+
+        "api/discussions",
+        "api/discussions/message",
+    };
+
+    private static String[] WHITE_LIST_PUT = {
+        "api/discussions"
+    };
+    private static String[] WHITE_LIST_DELETE = {
+        "api/discussions",
+        "api/discussions/*"
     };
 
     private final JwtAuthentificationFilter jwtAuthFilter;
@@ -50,6 +61,10 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,WHITE_LIST_GET)
                     .permitAll()
                     .requestMatchers(HttpMethod.POST,WHITE_LIST_POST)
+                    .permitAll()
+                    .requestMatchers(HttpMethod.PUT,WHITE_LIST_PUT)
+                    .permitAll()
+                    .requestMatchers(HttpMethod.DELETE,WHITE_LIST_DELETE)
                     .permitAll()
                     .requestMatchers("/api/auth/**")
                     .permitAll()

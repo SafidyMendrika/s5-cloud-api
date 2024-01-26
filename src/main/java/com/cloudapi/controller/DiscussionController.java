@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import jakarta.websocket.server.PathParam;
 @Service
 @RestController
 @RequestMapping("/api/discussions")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DiscussionController {
 
     @Autowired
@@ -57,6 +59,7 @@ public class DiscussionController {
         rep.success("creation discussion", discussionService.createNewDiscussion(newDiscussionDTO));
         return ResponseEntity.ok(rep);
     }
+
     @PostMapping(path ="/message",consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> addMessage(@RequestBody NewMessageDTO newMessageDTO){
         Response rep = new Response();  
