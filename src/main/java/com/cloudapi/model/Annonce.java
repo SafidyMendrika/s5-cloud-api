@@ -45,9 +45,6 @@ public class Annonce {
     @Column(name = "date_annonce")
     private LocalDateTime dateAnnonce;
 
-    @Column(name = "etat_annonce")
-    private int etat;
-
     @OneToOne
     @JoinColumn(name = "idmoteur" ,referencedColumnName = "id_moteur")
     private Moteur moteur;
@@ -57,8 +54,14 @@ public class Annonce {
     private Vitesse vitesse;
 
 
+    @OneToOne
     @JoinColumn(name = "idenergie", referencedColumnName = "id_energie")
     private Energie energie;
+
+    @Column(name = "etat_annonce")
+    private int etat;
+
+
 
 
     @JsonIgnore

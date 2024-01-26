@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Vitesses")
+@Table(name = "vitesses")
 public class Vitesse {
     @Id
     @Column(name = "id_vitesse")
