@@ -33,7 +33,8 @@ public class SecurityConfiguration {
 
     private static String[] WHITE_LIST_POST = {
         "api/utilisateurs",
-        "api/utilisateurs/login"
+        "api/utilisateurs/login",
+        "api/test/**"
     };
 
     private final JwtAuthentificationFilter jwtAuthFilter;

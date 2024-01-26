@@ -26,7 +26,7 @@ public class Modele {
     private int id;
 
 
-    @JsonIgnore
+    // @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idmarque")
     private Marque marque;
