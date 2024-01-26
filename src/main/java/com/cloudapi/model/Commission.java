@@ -32,7 +32,7 @@ public class Commission {
 
     @SuppressWarnings(value = "unchecked")
     public List<Commission> findAll(EntityManager entityManager){
-        String sql = "SELECT * FROM Commissions";
+        String sql = "SELECT * FROM Commissions order by date_insertion DESC";
         Query query = entityManager.createNativeQuery(sql, Commission.class);
         List<Commission> Commissions = (List<Commission>) query.getResultList();
 

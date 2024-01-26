@@ -2,7 +2,7 @@ CREATE OR REPLACE VIEW v_current_commission AS
     SELECT 
         *
     FROM commissions c 
-    where date_insertion = (select max(date_insertion) from commissions);
+    where date_insertion = (select max(date_insertion) from commissions) LIMIT 1;
 
 
 

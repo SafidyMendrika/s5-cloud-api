@@ -120,9 +120,10 @@ public class TestController {
                     .setContentType("image/png")
                     .build();
 
-            storageClient.bucket().create(fileName,Files.readAllBytes(localFilePath), contentType);
+            Blob b = storageClient.bucket().create(fileName,Files.readAllBytes(localFilePath), contentType);
 
             System.out.println("File uploaded successfully!");
+            System.out.println("LINK : "+ b.getMediaLink());
         } catch (Exception e) {
             e.printStackTrace();
         }
