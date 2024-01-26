@@ -35,7 +35,6 @@ public class ClassementController {
     public ResponseEntity<Response> classementAnnonce(@RequestParam int top){
         Response response = new Response();
 
-
         response.success("Top annonces", new ClassementAnnonce().findTop(entityManager,top));
         return ResponseEntity.ok(response);
     }
