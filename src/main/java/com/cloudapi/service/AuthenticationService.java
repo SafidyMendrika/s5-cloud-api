@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.model.Utilisateur;
 import com.cloudapi.repository.UtilisateurRepository;
-import com.cloudapi.security.AuthenticationRequest;
 import com.cloudapi.security.AuthenticationResponse;
 import com.cloudapi.security.JwtService;
-import com.cloudapi.security.RegisterRequest;
 
 import lombok.RequiredArgsConstructor;
 

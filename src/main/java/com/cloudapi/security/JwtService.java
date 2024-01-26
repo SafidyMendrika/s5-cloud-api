@@ -1,8 +1,6 @@
 package com.cloudapi.security;
 
 import java.security.Key;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

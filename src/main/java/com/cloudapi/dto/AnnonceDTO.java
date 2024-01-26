@@ -8,4 +8,8 @@ public class AnnonceDTO {
     private int idutilisateur;
     private int idvoiture;
     private String description;
+    private double prix;
+    private int idenergie;
+    private int idmoteur;
+    private int idvitesse;
 }

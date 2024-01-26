@@ -3,7 +3,6 @@ package com.cloudapi.model;
 import java.util.List;
 
 import com.cloudapi.dto.ModeleDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

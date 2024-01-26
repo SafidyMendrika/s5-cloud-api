@@ -12,7 +12,6 @@ import com.cloudapi.dto.NewMessageDTO;
 import com.cloudapi.model.Discussion;
 import com.cloudapi.model.Message;
 import com.cloudapi.model.MessageUtilisateur;
-import com.cloudapi.model.Utilisateur;
 import com.cloudapi.repository.DiscussionRepository;
 
 import jakarta.persistence.EntityManager;

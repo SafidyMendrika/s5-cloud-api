@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Query;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -46,6 +47,19 @@ public class Annonce {
 
     @Column(name = "etat_annonce")
     private int etat;
+
+    @OneToOne
+    @JoinColumn(name = "idmoteur" ,referencedColumnName = "id_moteur")
+    private Moteur moteur;
+
+    @OneToOne
+    @JoinColumn(name = "idvitesse" ,referencedColumnName = "id_vitesse")
+    private Vitesse vitesse;
+
+
+    @JoinColumn(name = "idenergie", referencedColumnName = "id_energie")
+    private Energie energie;
+
 
     @JsonIgnore
     @ManyToOne
@@ -98,25 +112,33 @@ public class Annonce {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = """
-                INSERT INTO annonces (idutilisateur, idModele, description_annonce, date_validation, date_annonce) VALUES
-                (?, ?, ?, null, CAST (? AS TIMESTAMP)) RETURNING *
+                INSERT INTO annonces (idutilisateur, idModele, description_annonce, prix_annonce ,date_validation, date_annonce, idenergie, idvitesse, idmoteur) VALUES
+                (?, ?, ?, null, CAST (? AS TIMESTAMP), ?, ?, ?) RETURNING *
                 """;
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
         query.setParameter(1, annonceDTO.getIdutilisateur());
         query.setParameter(2, annonceDTO.getIdvoiture());
         query.setParameter(3, annonceDTO.getDescription());
-        query.setParameter(4, formatter.format(now));
+        query.setParameter(4, annonceDTO.getPrix());
+        query.setParameter(5, formatter.format(now));
+        query.setParameter(6, annonceDTO.getIdenergie());
+        query.setParameter(7, annonceDTO.getIdvitesse());
+        query.setParameter(8, annonceDTO.getIdmoteur());
         return (Annonce) query.getSingleResult();
     }
 
 
     public Annonce update(EntityManager entityManager,int id, AnnonceDTO annonceDTO){
-        String sql = "UPDATE annonces set idvoiture = ?, idutilisateur= ? , description_annonce= ? where id_annonce = ? RETURNING *";
+        String sql = "UPDATE annonces set idvoiture = ?, idutilisateur= ? , description_annonce= ?, prix_annonce = ?, idenergie= ?, idmoteur=?, idvitesse=? where id_annonce = ? RETURNING *";
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
         query.setParameter(1, annonceDTO.getIdvoiture());
         query.setParameter(2, annonceDTO.getIdutilisateur());
         query.setParameter(3, annonceDTO.getDescription());
-        query.setParameter(4, id);
+        query.setParameter(4, annonceDTO.getPrix());
+        query.setParameter(5, annonceDTO.getIdenergie());
+        query.setParameter(6, annonceDTO.getIdmoteur());
+        query.setParameter(7, annonceDTO.getIdvitesse());
+        query.setParameter(8, id);
         return (Annonce) query.getSingleResult();
     }
 
