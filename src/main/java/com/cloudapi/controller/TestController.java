@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import com.google.firebase.cloud.StorageClient;
 
@@ -33,6 +34,8 @@ import com.google.firebase.FirebaseOptions;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+
+
 
 @RestController
 @RequestMapping("/api/test")
@@ -108,22 +111,25 @@ public class TestController {
             FirebaseApp.initializeApp(options);
             StorageClient storageClient = StorageClient.getInstance();
         
-            String fileName = "test.png";
+            
 
             Path localFilePath = Paths.get("firebase/photo.png");
+            String extension = localFilePath.getFileName().toString().split("\\.")[1];
+
+            String fileName = UUID.randomUUID().toString() + "." + extension;
 
             // Determine the content type based on the file extension (e.g., image/jpeg)
             String contentType = Files.probeContentType(localFilePath);
 
-            // Upload the photo to Firebase Cloud Storage with specified content type
-            BlobInfo blobInfo = BlobInfo.newBuilder(storageClient.bucket().getName(), fileName)
-                    .setContentType("image/png")
-                    .build();
+            // // Upload the photo to Firebase Cloud Storage with specified content type
+            // BlobInfo blobInfo = BlobInfo.newBuilder(storageClient.bucket().getName(), fileName)
+            //         .setContentType("image/png")
+            //         .build();
 
             Blob b = storageClient.bucket().create(fileName,Files.readAllBytes(localFilePath), contentType);
 
             System.out.println("File uploaded successfully!");
-            System.out.println("LINK : "+ b.getMediaLink());
+            // System.out.println("LINK : "+ b.getStorage().get(b.getBlobId()).getDow);
         } catch (Exception e) {
             e.printStackTrace();
         }
