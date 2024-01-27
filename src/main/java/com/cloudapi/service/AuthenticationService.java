@@ -51,5 +51,21 @@ public class AuthenticationService {
             .token(jwtToken)    
             .build();
     }
+
+
+    public AuthenticationResponse getToken() {
+        UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
+        utilisateurDTO.setEmail("root@email.com");
+        utilisateurDTO.setMdp("root");
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(utilisateurDTO.getEmail(), utilisateurDTO.getMdp())
+        );
+        var user = repository.findByEmail(utilisateurDTO.getEmail())
+                    .orElseThrow();
+                    var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+            .token(jwtToken)    
+            .build();
+    }
         
 }
