@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudapi.dto.MarqueDTO;
 import com.cloudapi.json.Response;
@@ -44,10 +46,15 @@ public class MarqueController {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> insert(@RequestBody MarqueDTO marqueDTO){
+    @PostMapping
+    public ResponseEntity<Response> insert(@RequestBody MultipartFile file, MarqueDTO marqueDTO){
         Response response = new Response();
-        response.success("Insertion d'une marque", new Marque().insert(entityManager, marqueDTO));
+        try {
+            response.success("Insertion d'une marque", new Marque().insert(entityManager, marqueDTO, file));
+        } catch (Exception e) {
+            response.error(new Exception("Erreur lors de l'insertion de la marque"));
+        }
+        
         return ResponseEntity.ok(response);
     }
 

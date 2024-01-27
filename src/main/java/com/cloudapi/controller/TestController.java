@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudapi.json.Response;
 import com.cloudapi.model.Annonce;
+import com.cloudapi.util.Util;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
@@ -61,7 +62,7 @@ public class TestController {
     public ResponseEntity<Response> uploadFiles(@RequestParam("file") ArrayList<MultipartFile> files){
         Response rep= new Response();
         try {
-            rep.success("Upload file réussi", new Annonce().uploadFiles(files));
+            rep.success("Upload file réussi", Util.uploadFiles(files));
             
         } catch (Exception e) {
             rep.error(e);
@@ -75,7 +76,7 @@ public class TestController {
     public ResponseEntity<Response> uploadFile(@RequestParam("file") MultipartFile file){
         Response rep= new Response();
         try {
-            rep.success("Upload file réussi", new Annonce().uploadFile(file));
+            rep.success("Upload file réussi", Util.uploadFile(file));
             
         } catch (Exception e) {
             rep.error(e);

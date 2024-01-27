@@ -45,7 +45,7 @@ CREATE TABLE categories(
 CREATE TABLE marques(
     id_marque SERIAL PRIMARY KEY,
     nom_marque VARCHAR(255) NOT NULL,
-    lien_logo VARCHAR(255) NOT NULL,
+    lien_logo TEXT NOT NULL,
     etat_marque INTEGER DEFAULT 0
 );
     
@@ -84,7 +84,7 @@ CREATE TABLE commissions(
 CREATE TABLE photos_annonces(
     id_photo SERIAL PRIMARY KEY,
     idAnnonce INTEGER REFERENCES annonces(id_annonce),
-    path VARCHAR(255) NOT NULL,
+    path TEXT NOT NULL,
     etat_photo INTEGER DEFAULT 0
 );
 

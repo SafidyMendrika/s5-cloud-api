@@ -3,7 +3,10 @@ package com.cloudapi.model;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.cloudapi.dto.MarqueDTO;
+import com.cloudapi.util.Util;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -70,7 +73,9 @@ public class Marque {
     }
 
 
-    public Marque insert(EntityManager entityManager, MarqueDTO marqueDTO){
+    public Marque insert(EntityManager entityManager, MarqueDTO marqueDTO, MultipartFile file) throws Exception{
+        String lien = Util.uploadFile(file);
+        marqueDTO.setLien(lien);
         String sql = """
                 INSERT INTO Marques (nom_marque, lien_logo) VALUES
                 (?, ?) RETURNING *
