@@ -95,53 +95,7 @@ public class Annonce {
     private List<PhotoAnnonce> photoAnnonces;
 
 
-    public ArrayList<String> uploadFiles(ArrayList<MultipartFile> files)throws Exception{
-        ArrayList<String> rep= new ArrayList<String>();
-        for (MultipartFile file : files) {
-            rep.add(uploadFile(file));
-        }
-        return rep;
-    }
 
-
-
-
-    public String uploadFile(MultipartFile file)throws Exception{
-        if (FirebaseApp.getApps().isEmpty()) {
-            // Initialize Firebase App
-            File f = new File("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
-            InputStream serviceAccount = new FileInputStream(f);
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setStorageBucket("s5-cloud-api-file.appspot.com")
-                    .build();
-
-            FirebaseApp.initializeApp(options);
-        }
-        
-        StorageClient storageClient = StorageClient.getInstance();
-
-        String extension = file.getOriginalFilename().split("\\.")[1];
-
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-
-        Path tempFile = convFile.toPath();
-
-        String fileName = UUID.randomUUID().toString() + "." + extension;  
-        String contentType = Files.probeContentType(tempFile);
-
-        Blob b = storageClient.bucket().create(fileName,Files.readAllBytes(tempFile), contentType);
-
-        convFile.delete();
-
-        String downloadUrl = storageClient.bucket().get(b.getBlobId().getName()).signUrl(1, TimeUnit.DAYS).toString();
-        return downloadUrl;
-
-    }
 
 
     public List<PhotoAnnonce> getPhotoAnnonces(){
