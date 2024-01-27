@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 import com.google.firebase.cloud.StorageClient;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -58,20 +60,7 @@ public class TestController {
     private EntityManager entityManager;
 
 
-    @GetMapping
-    public ResponseEntity<Response> test(){
-        File f = new File("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
-        Response rep= new Response();
-        try {
-            rep.success("Upload file réussi", f.exists());
-            
-        } catch (Exception e) {
-            rep.error(e);
-        }
-        
-        return ResponseEntity.ok(rep);
 
-    }
 
 
 
@@ -107,6 +96,20 @@ public class TestController {
 
 
 
+    @GetMapping
+    public ResponseEntity<Response> test(){
+        Response rep = new Response();
+        try {
+            Resource resource = new ClassPathResource("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
+            File f = resource.getFile();
+            rep.success("success", f.getName());
+        } catch (Exception e) {
+            rep.error(e);
+            // TODO: handle exception
+        }
+       
+        return ResponseEntity.ok(rep);
+    }
 
     @GetMapping("/test-user")
     public ResponseEntity<String> testUser(){

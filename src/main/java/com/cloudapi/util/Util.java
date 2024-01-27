@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -34,8 +36,8 @@ public class Util {
 
     public static String uploadFile(MultipartFile file)throws Exception{
         if (FirebaseApp.getApps().isEmpty()) {
-            // Initialize Firebase App
-            File f = new File("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
+            Resource resource = new ClassPathResource("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
+            File f = resource.getFile();
             InputStream serviceAccount = new FileInputStream(f);
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
