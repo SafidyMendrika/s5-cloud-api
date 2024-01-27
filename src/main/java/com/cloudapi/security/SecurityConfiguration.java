@@ -28,6 +28,7 @@ public class SecurityConfiguration {
         "api/marques",
         "api/modeles",
         "api/auth/**",
+        "api/test/**",
         "api/utilisateurs"
     };
 
