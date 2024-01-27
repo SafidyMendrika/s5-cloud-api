@@ -36,8 +36,7 @@ public class Util {
 
     public static String uploadFile(MultipartFile file)throws Exception{
         if (FirebaseApp.getApps().isEmpty()) {
-            Resource resource = new ClassPathResource("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
-            File f = resource.getFile();
+            File f = new File("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
             InputStream serviceAccount = new FileInputStream(f);
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
