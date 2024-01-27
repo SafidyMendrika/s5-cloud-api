@@ -1,6 +1,7 @@
 package com.cloudapi.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
 
-    @PostMapping("/token")
+    @GetMapping("/token")
     public ResponseEntity<Response> authenticate(){
         Response rep = new Response();
         rep.success("Authentification réussie", service.getToken());
