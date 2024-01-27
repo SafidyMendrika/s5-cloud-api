@@ -35,4 +35,4 @@ build/
 pom.xml
 ./src/main/resources/
 
-firebase/
+# firebase/
