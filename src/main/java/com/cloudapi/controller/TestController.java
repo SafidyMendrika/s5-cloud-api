@@ -7,7 +7,10 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import com.google.firebase.cloud.StorageClient;
 
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudapi.json.Response;
+import com.cloudapi.model.Annonce;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
@@ -50,42 +55,38 @@ public class TestController {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
-        
-        if (FirebaseApp.getApps().isEmpty()) {
-            // Initialize Firebase App
-            File f = new File("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
-            InputStream serviceAccount = new FileInputStream(f);
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setStorageBucket("s5-cloud-api-file.appspot.com")
-                    .build();
 
-            FirebaseApp.initializeApp(options);
+
+    @PostMapping("/uploads")
+    public ResponseEntity<Response> uploadFiles(@RequestParam("file") ArrayList<MultipartFile> files){
+        Response rep= new Response();
+        try {
+            rep.success("Upload file réussi", new Annonce().uploadFiles(files));
+            
+        } catch (Exception e) {
+            rep.error(e);
         }
+        
+        return ResponseEntity.ok(rep);
 
-
-
-        // // Get a reference to the Google Cloud Storage service
-        // Storage storage = StorageOptions.getDefaultInstance().getService();
-
-        // // Specify the name for the file in Google Cloud Storage
-        // String fileName = file.getOriginalFilename();
-
-        // // Get a reference to the bucket
-        // Bucket bucket = storage.get("s5-cloud-api-file.appspot.com");
-
-        //   // Upload the file to Google Cloud Storage
-        //   BlobId blobId = BlobId.of("s5-cloud-api-file.appspot.com", fileName);
-        //   BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(file.getContentType()).build();
-        //   storage.create(blobInfo, file.getBytes());
-
-        // // Get the download URL for the uploaded file (Note: Firebase SDK doesn't provide a direct URL retrieval)
-        // String downloadUrl = "https://storage.googleapis.com/" + bucket.getName() + "/" + fileName;
-
-        return "File uploaded successfully! Download URL: hello ";
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<Response> uploadFile(@RequestParam("file") MultipartFile file){
+        Response rep= new Response();
+        try {
+            rep.success("Upload file réussi", new Annonce().uploadFile(file));
+            
+        } catch (Exception e) {
+            rep.error(e);
+        }
+        
+        return ResponseEntity.ok(rep);
+
+    }
+
+
+
 
 
     @GetMapping
@@ -113,7 +114,7 @@ public class TestController {
         
             
 
-            Path localFilePath = Paths.get("firebase/photo.png");
+            Path localFilePath = Paths.get("firebase/photo2.png");
             String extension = localFilePath.getFileName().toString().split("\\.")[1];
 
             String fileName = UUID.randomUUID().toString() + "." + extension;
@@ -122,14 +123,14 @@ public class TestController {
             String contentType = Files.probeContentType(localFilePath);
 
             // // Upload the photo to Firebase Cloud Storage with specified content type
-            // BlobInfo blobInfo = BlobInfo.newBuilder(storageClient.bucket().getName(), fileName)
-            //         .setContentType("image/png")
-            //         .build();
 
             Blob b = storageClient.bucket().create(fileName,Files.readAllBytes(localFilePath), contentType);
 
+            String downloadUrl = storageClient.bucket().get(b.getBlobId().getName()).signUrl(1, TimeUnit.DAYS).toString();
             System.out.println("File uploaded successfully!");
-            // System.out.println("LINK : "+ b.getStorage().get(b.getBlobId()).getDow);
+            System.out.println("LINK : "+ downloadUrl);
+
+            System.out.println(localFilePath.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
