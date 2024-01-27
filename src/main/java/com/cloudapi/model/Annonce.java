@@ -46,8 +46,10 @@ public class Annonce {
     @Column(name = "id_annonce")
     private int id;
 
-    @Column(name = "idmodele")
-    private int idModele;
+
+    @OneToOne
+    @JoinColumn(name = "idmodele", referencedColumnName = "id_modele")
+    private Modele modele;
 
     @Column(name= "description_annonce")
     private String description;
