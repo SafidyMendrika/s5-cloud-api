@@ -52,6 +52,7 @@ public class MarqueController {
         try {
             response.success("Insertion d'une marque", new Marque().insert(entityManager, marqueDTO, file));
         } catch (Exception e) {
+            e.printStackTrace();
             response.error(new Exception("Erreur lors de l'insertion de la marque"));
         }
         
