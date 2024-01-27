@@ -4,6 +4,7 @@ package com.cloudapi.controller;
 import org.hibernate.JDBCException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,8 @@ public class EnergieController {
         return ResponseEntity.ok(response);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> insert(@RequestBody EnergieDTO EnergieDTO){
         Response response = new Response();
@@ -61,6 +64,8 @@ public class EnergieController {
     }
 
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody EnergieDTO EnergieDTO){
         Response response = new Response();
@@ -68,6 +73,8 @@ public class EnergieController {
         return ResponseEntity.ok(response);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  supprimer(@PathVariable int id){
         Response response = new Response();
