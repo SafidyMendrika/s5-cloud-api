@@ -45,7 +45,7 @@ public class MarqueController {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> insert(@RequestBody MultipartFile file, MarqueDTO marqueDTO){
         Response response = new Response();
         try {
