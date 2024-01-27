@@ -58,6 +58,22 @@ public class TestController {
     private EntityManager entityManager;
 
 
+    @GetMapping
+    public ResponseEntity<Response> test(){
+        File f = new File("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
+        Response rep= new Response();
+        try {
+            rep.success("Upload file réussi", f.exists());
+            
+        } catch (Exception e) {
+            rep.error(e);
+        }
+        
+        return ResponseEntity.ok(rep);
+
+    }
+
+
 
     @PostMapping("/uploads")
     public ResponseEntity<Response> uploadFiles(@RequestParam("file") ArrayList<MultipartFile> files){
@@ -91,10 +107,6 @@ public class TestController {
 
 
 
-    @GetMapping
-    public ResponseEntity<String> test(){
-        return ResponseEntity.ok("Hello Admin");
-    }
 
     @GetMapping("/test-user")
     public ResponseEntity<String> testUser(){
