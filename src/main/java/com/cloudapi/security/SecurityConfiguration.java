@@ -34,9 +34,11 @@ public class SecurityConfiguration {
         "api/utilisateurs",
         "api/utilisateurs/login",
         "api/test/**",
+        "api/auth/**",
 
         "api/discussions",
         "api/discussions/message",
+
     };
 
     private static String[] WHITE_LIST_PUT = {
@@ -65,8 +67,6 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.PUT,WHITE_LIST_PUT)
                     .permitAll()
                     .requestMatchers(HttpMethod.DELETE,WHITE_LIST_DELETE)
-                    .permitAll()
-                    .requestMatchers("/api/auth/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())

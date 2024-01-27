@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -103,35 +104,21 @@ public class TestController {
 
     public static void main(String[] args) {
         try {
-            // Initialize Firebase App
-            InputStream serviceAccount = new FileInputStream("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setStorageBucket("s5-cloud-api-file.appspot.com")
-                    .build();
+                // Spécifiez le chemin complet du fichier que vous souhaitez convertir en base64
+                String filePath = "firebase/photo.png";
 
-            FirebaseApp.initializeApp(options);
-            StorageClient storageClient = StorageClient.getInstance();
+                    File file = new File(filePath);
         
-            
-
-            Path localFilePath = Paths.get("firebase/photo2.png");
-            String extension = localFilePath.getFileName().toString().split("\\.")[1];
-
-            String fileName = UUID.randomUUID().toString() + "." + extension;
-
-            // Determine the content type based on the file extension (e.g., image/jpeg)
-            String contentType = Files.probeContentType(localFilePath);
-
-            // // Upload the photo to Firebase Cloud Storage with specified content type
-
-            Blob b = storageClient.bucket().create(fileName,Files.readAllBytes(localFilePath), contentType);
-
-            String downloadUrl = storageClient.bucket().get(b.getBlobId().getName()).signUrl(1, TimeUnit.DAYS).toString();
-            System.out.println("File uploaded successfully!");
-            System.out.println("LINK : "+ downloadUrl);
-
-            System.out.println(localFilePath.toString());
+                    // Convertir le fichier en tableau de bytes
+                    byte[] fileBytes = new byte[(int) file.length()];
+                    try (FileInputStream fileInputStream = new FileInputStream(file)) {
+                        fileInputStream.read(fileBytes);
+                    }
+        
+                    // Convertir le tableau de bytes en chaîne base64
+                    String base64String = Base64.getEncoder().encodeToString(fileBytes);
+        
+                    System.out.println("La chaîne base64 du fichier est : " + base64String);
         } catch (Exception e) {
             e.printStackTrace();
         }
