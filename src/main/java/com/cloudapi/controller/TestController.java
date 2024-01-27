@@ -100,8 +100,8 @@ public class TestController {
     public ResponseEntity<Response> test(){
         Response rep = new Response();
         try {
-            Resource resource = new ClassPathResource("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
-            File f = resource.getFile();
+            // Resource resource = new ClassPathResource("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
+            File f = new File("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
             rep.success("success", f.getName());
         } catch (Exception e) {
             rep.error(e);
