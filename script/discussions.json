@@ -38,7 +38,7 @@
 
   },
   {
-    "id_discussion" : 1,
+    "id_discussion" : 2,
     "users" : [
         {
             "id_utilisateur" : 1899,
@@ -76,7 +76,7 @@
 
 },
 {
-  "id_discussion" : 1,
+  "id_discussion" : 3,
   "users" : [
       {
           "id_utilisateur" : 1822,
