@@ -42,6 +42,8 @@ public class Utilisateur implements UserDetails {
     @Column(name = "email_utilisateur")
     private String email;
 
+
+    @JsonIgnore
     @Column(name = "password_utilisateur")
     private String password;
 
@@ -154,6 +156,7 @@ public class Utilisateur implements UserDetails {
     }
 
 
+    @JsonIgnore
     public String getRole(){
         switch (role) {
             case 0:
@@ -172,6 +175,7 @@ public class Utilisateur implements UserDetails {
     }
 
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return email;

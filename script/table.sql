@@ -1,7 +1,7 @@
-CREATE DATABASE gascar;
+-- CREATE DATABASE gascar;
 
 
-\c gascar;
+-- \c gascar;
 
 -- etat
 -- 0 : créer
