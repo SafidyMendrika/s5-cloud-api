@@ -6,6 +6,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import jakarta.persistence.Query;
@@ -15,10 +17,9 @@ import jakarta.persistence.Query;
 @Table(name = "v_top_annonces")
 public class ClassementAnnonce {
     @Id
-    // @OneToOne
-    // @JoinColumn(name = "idannonce", referencedColumnName = "id_annonce",nullable = true)
-    @Column(name = "idannonce")
-    private int annonce;
+    @OneToOne
+    @JoinColumn(name = "idannonce", referencedColumnName = "id_annonce",nullable = true)
+    private Annonce annonce;
 
     @Column(name = "count")
     private int count;    
@@ -42,10 +43,6 @@ public class ClassementAnnonce {
     public ClassementAnnonce() {
     }
 
-    public ClassementAnnonce(int annonce, int count) {
-        this.annonce = annonce;
-        this.count = count;
-    }
 
     
 }
