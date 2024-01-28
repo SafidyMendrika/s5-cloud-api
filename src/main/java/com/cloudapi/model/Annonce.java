@@ -92,7 +92,6 @@ public class Annonce {
 
 
 
-    @JsonIgnore
     @OneToMany(mappedBy = "annonce")
     private List<PhotoAnnonce> photoAnnonces;
 
