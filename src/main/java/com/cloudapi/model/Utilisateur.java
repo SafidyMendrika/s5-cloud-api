@@ -1,5 +1,6 @@
 package com.cloudapi.model;
 
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,6 +108,11 @@ public class Utilisateur implements UserDetails {
         return (Utilisateur) query.getSingleResult();
     }
 
+    public  static Long findNombreUtilisateur(EntityManager entityManager){
+        String sql = "SELECT count(*) FROM utilisateurs where statut_utilisateur!= 10";
+        Query query = entityManager.createNativeQuery(sql);
+        return (Long) query.getSingleResult();
+    }
 
     public Utilisateur insert(EntityManager entityManager, UtilisateurDTO utilisateurDTO){
         String sql = """

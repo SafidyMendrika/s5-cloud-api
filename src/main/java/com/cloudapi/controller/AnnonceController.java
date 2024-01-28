@@ -76,6 +76,7 @@ public class AnnonceController {
         return ResponseEntity.ok(response);
     }     
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/statistiques")
     public ResponseEntity<Response> findSat(@RequestParam int annee)throws Exception{
         Response response = new Response();
