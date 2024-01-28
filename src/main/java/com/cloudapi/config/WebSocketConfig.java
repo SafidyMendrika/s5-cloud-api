@@ -14,17 +14,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(final MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/all","/specific");
-        registry.setApplicationDestinationPrefixes("/app");
+        registry.enableSimpleBroker("/topic");
+        registry.setApplicationDestinationPrefixes("/ws");
     }
 
     @Override
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws");
-        registry.addEndpoint("/ws")
-        .setHandshakeHandler(new UserHandshakeHandler())
-        .withSockJS();
+        registry.addEndpoint("/websocket")
+                .setAllowedOrigins("*")
+                .setHandshakeHandler(new UserHandshakeHandler())
+                .withSockJS();
     }
-
     
 }
