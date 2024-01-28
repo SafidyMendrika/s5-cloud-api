@@ -13,6 +13,6 @@ import com.cloudapi.model.Message;
 public interface DiscussionRepository extends MongoRepository<Discussion, String>{
 
     
-    @Query("{'utilisateurs.id_utilisateur': ?0 ,  'closed': false}")
+    @Query("{'users.id_utilisateur': ?0 ,  'closed': false}")
     List<Discussion> findDiscussionByUserId(int userId);
 }
