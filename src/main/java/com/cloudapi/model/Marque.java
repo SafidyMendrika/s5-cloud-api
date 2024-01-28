@@ -87,11 +87,22 @@ public class Marque {
     }
 
 
-    public Marque update(EntityManager entityManager,int id, MarqueDTO marqueDTO){
+    public Marque update(EntityManager entityManager,int id, MarqueDTO marqueDTO, MultipartFile file)throws Exception{
         String sql = "UPDATE Marques set nom_marque = ? where id_marque=? RETURNING *";
-        Query query = entityManager.createNativeQuery(sql, Marque.class);
-        query.setParameter(1, marqueDTO.getNom());
-        query.setParameter(2, id);
+        Query query = null;
+        if (file != null) {
+            String lien = Util.uploadFile(file);
+            marqueDTO.setLien(lien);
+            sql = "UPDATE Marques set nom_marque = ?, lien_logo= ? where id_marque=? RETURNING *";
+            query = entityManager.createNativeQuery(sql, Marque.class);
+            query.setParameter(1, marqueDTO.getNom());
+            query.setParameter(2, marqueDTO.getLien());
+            query.setParameter(3, id);
+        }else{
+            query = entityManager.createNativeQuery(sql, Marque.class);
+            query.setParameter(1, marqueDTO.getNom());
+            query.setParameter(2, id);
+        }
         return (Marque) query.getSingleResult();
     }
 

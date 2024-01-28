@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,18 +54,24 @@ public class MarqueController {
             response.success("Insertion d'une marque", new Marque().insert(entityManager, marqueDTO, file));
         } catch (Exception e) {
             e.printStackTrace();
-            // response.error(new Exception("Erreur lors de l'insertion de la marque"));
-            response.error(e);
+            response.error(new Exception("Erreur lors de l'insertion de la marque"));
         }
         
         return ResponseEntity.ok(response);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody MarqueDTO marqueDTO){
+    @PutMapping(value="/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody MultipartFile file, MarqueDTO marqueDTO){
         Response response = new Response();
-        response.success("Modification d'une Marque", new Marque().update(entityManager,id, marqueDTO));
+        try {
+            response.success("Modification d'une Marque", new Marque().update(entityManager,id, marqueDTO, file));
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.error(new Exception("Erreur lors de la modification de la marque"));
+            // TODO: handle exception
+        }
+        
         return ResponseEntity.ok(response);
     }
 
