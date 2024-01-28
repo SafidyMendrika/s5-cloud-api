@@ -135,11 +135,11 @@ public class Annonce {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = """
                 INSERT INTO annonces (idutilisateur, idModele, description_annonce, prix_annonce ,date_validation, date_annonce, idenergie, idvitesse, idmoteur) VALUES
-                (?, ?, ?, null, CAST (? AS TIMESTAMP), ?, ?, ?) RETURNING *
+                (?, ?, ?, ?, null, CAST (? AS TIMESTAMP), ?, ?, ?) RETURNING *
                 """;
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
         query.setParameter(1, annonceDTO.getIdutilisateur());
-        query.setParameter(2, annonceDTO.getIdvoiture());
+        query.setParameter(2, annonceDTO.getIdmodele());
         query.setParameter(3, annonceDTO.getDescription());
         query.setParameter(4, annonceDTO.getPrix());
         query.setParameter(5, formatter.format(now));
@@ -151,16 +151,17 @@ public class Annonce {
 
 
     public Annonce update(EntityManager entityManager,int id, AnnonceDTO annonceDTO){
-        String sql = "UPDATE annonces set idvoiture = ?, idutilisateur= ? , description_annonce= ?, prix_annonce = ?, idenergie= ?, idmoteur=?, idvitesse=? where id_annonce = ? RETURNING *";
+        String sql = "UPDATE annonces set idmodele = ?, idutilisateur= ? , description_annonce= ?, prix_annonce = ?, idenergie= ?, idmoteur=?, idvitesse=?, date_annonce=CAST(? as TIMESTAMP) where id_annonce = ? RETURNING *";
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
-        query.setParameter(1, annonceDTO.getIdvoiture());
+        query.setParameter(1, annonceDTO.getIdmodele());
         query.setParameter(2, annonceDTO.getIdutilisateur());
         query.setParameter(3, annonceDTO.getDescription());
         query.setParameter(4, annonceDTO.getPrix());
         query.setParameter(5, annonceDTO.getIdenergie());
         query.setParameter(6, annonceDTO.getIdmoteur());
         query.setParameter(7, annonceDTO.getIdvitesse());
-        query.setParameter(8, id);
+        query.setParameter(8, annonceDTO.getDate());
+        query.setParameter(9, id);
         return (Annonce) query.getSingleResult();
     }
 

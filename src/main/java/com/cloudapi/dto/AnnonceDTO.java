@@ -6,10 +6,11 @@ import lombok.Data;
 public class AnnonceDTO {
     private int id;
     private int idutilisateur;
-    private int idvoiture;
+    private int idmodele;
     private String description;
     private double prix;
     private int idenergie;
     private int idmoteur;
     private int idvitesse;
+    private String date;
 }

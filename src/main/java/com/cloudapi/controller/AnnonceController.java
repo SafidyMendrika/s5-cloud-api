@@ -35,6 +35,7 @@ public class AnnonceController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value="/{id}/confirmer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> confirmer(@PathVariable int id){
         Response response = new Response();
