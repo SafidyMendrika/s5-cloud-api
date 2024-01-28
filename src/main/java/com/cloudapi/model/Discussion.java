@@ -13,7 +13,7 @@ public class Discussion {
     @Id
     private String id;
 
-    private List<MessageUtilisateur> users;
+    private List<MessageUtilisateur> utilisateurs;
 
     private String date_creation;
 
