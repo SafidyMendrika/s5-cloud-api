@@ -119,7 +119,7 @@ public class Annonce {
 
     @SuppressWarnings(value = "unchecked")
     public List<Annonce> findAll(EntityManager entityManager){
-        String sql = "SELECT * FROM annonces where etat_annonce>=10";
+        String sql = "SELECT * FROM annonces where etat_annonce>=0";
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
         return (List<Annonce>) query.getResultList();
     }
