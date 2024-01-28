@@ -82,8 +82,6 @@ public class Annonce {
 
 
 
-
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name ="idutilisateur")
     private Utilisateur utilisateur;

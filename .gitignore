@@ -36,3 +36,6 @@ pom.xml
 ./src/main/resources/
 
 # firebase/
+
+
+application.properties
