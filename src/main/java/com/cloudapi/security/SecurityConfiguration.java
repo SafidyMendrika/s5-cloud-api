@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         "api/auth/**",
         "api/test/**",
         "api/utilisateurs",
-        "api/benefices"
+        // "api/benefices",
 
         // "/api/utilisateurs/nombres",
         // "api/annonces/statistiques"
