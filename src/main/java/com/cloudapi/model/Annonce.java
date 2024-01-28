@@ -151,7 +151,7 @@ public class Annonce {
 
 
     public Annonce update(EntityManager entityManager,int id, AnnonceDTO annonceDTO){
-        String sql = "UPDATE annonces set idmodele = ?, idutilisateur= ? , description_annonce= ?, prix_annonce = ?, idenergie= ?, idmoteur=?, idvitesse=?, date_annonce=CAST(? as TIMSTAMP) where id_annonce = ? RETURNING *";
+        String sql = "UPDATE annonces set idmodele = ?, idutilisateur= ? , description_annonce= ?, prix_annonce = ?, idenergie= ?, idmoteur=?, idvitesse=?, date_annonce=CAST(? as TIMESTAMP) where id_annonce = ? RETURNING *";
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
         query.setParameter(1, annonceDTO.getIdmodele());
         query.setParameter(2, annonceDTO.getIdutilisateur());
