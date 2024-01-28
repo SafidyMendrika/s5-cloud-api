@@ -46,3 +46,10 @@ CREATE OR REPLACE VIEW v_top_annonces AS
     GROUP BY idAnnonce 
     ORDER BY count;
 
+
+
+CREATE OR REPLACE VIEW v_annonce_valide AS 
+    SELECT 
+        *
+    FROM annonces 
+    WHERE etat_annonce = 20;

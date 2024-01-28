@@ -103,3 +103,13 @@ CREATE TABLE benefices(
     idAnnonce INT REFERENCES annonces(id_annonce),
     date TIMESTAMP
 );
+
+
+
+CREATE TABLE annonces(
+    id_annonce SERIAL PRIMARY KEY,
+    prix_annonce DOUBLE PRECISION NOT NULL,
+    date_validation TIMESTAMP,
+    date_annonce TIMESTAMP NOT NULL,
+    etat_annonce INTEGER DEFAULT 0
+);

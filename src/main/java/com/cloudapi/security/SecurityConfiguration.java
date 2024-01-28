@@ -32,7 +32,8 @@ public class SecurityConfiguration {
         "api/energies",
         "api/auth/**",
         "api/test/**",
-        "api/utilisateurs"
+        "api/utilisateurs",
+        "api/benefices"
     };
 
     private static String[] WHITE_LIST_POST = {
