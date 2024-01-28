@@ -135,7 +135,7 @@ public class Annonce {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = """
                 INSERT INTO annonces (idutilisateur, idModele, description_annonce, prix_annonce ,date_validation, date_annonce, idenergie, idvitesse, idmoteur) VALUES
-                (?, ?, ?, null, CAST (? AS TIMESTAMP), ?, ?, ?) RETURNING *
+                (?, ?, ?, ?, null, CAST (? AS TIMESTAMP), ?, ?, ?) RETURNING *
                 """;
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
         query.setParameter(1, annonceDTO.getIdutilisateur());
