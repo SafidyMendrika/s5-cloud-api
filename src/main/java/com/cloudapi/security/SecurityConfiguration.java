@@ -27,6 +27,11 @@ public class SecurityConfiguration {
         "api/categories",
         "api/marques",
         "api/modeles",
+        "api/moteurs",
+        "api/vitesses",
+        "api/energies",
+        "api/auth/**",
+        "api/test/**",
         "api/utilisateurs"
     };
 

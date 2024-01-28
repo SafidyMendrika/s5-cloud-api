@@ -42,6 +42,8 @@ public class Utilisateur implements UserDetails {
     @Column(name = "email_utilisateur")
     private String email;
 
+
+    @JsonIgnore
     @Column(name = "password_utilisateur")
     private String password;
 
@@ -90,25 +92,9 @@ public class Utilisateur implements UserDetails {
 
 
 
-    // @SuppressWarnings(value = "unchecked")
-    // public Response verificationLogin(EntityManager entityManager,String email, String mdp)throws Exception{
-    //     Response rep = new Response();
-    //     String sql = "SELECT * FROM utilisateurs where email_utilisateur= :email and password_utilisateur = :mdp";
-    //     Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
-    //     query.setParameter("email", email);
-    //     query.setParameter("mdp", mdp);
-    //     List<Utilisateur> users = (List<Utilisateur>) query.getResultList();
-    //     if (users.size()==0){
-    //         throw new Exception("Mot de passe ou email invalide");
-    //     }
-    //     Session session = new Session().insert(entityManager, users.get(0).id);
-    //     rep.success("Connection avec succès",session);
-    //     return rep;
-    // }
-
     @SuppressWarnings(value = "unchecked")
     public List<Utilisateur> findAll(EntityManager entityManager){
-        String sql = "SELECT * FROM utilisateurs where etat_utilisateur>=0";
+        String sql = "SELECT * FROM utilisateurs where etat_utilisateur=0 and statut_utilisateur=0";
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
         return (List<Utilisateur>) query.getResultList();
     }
@@ -154,6 +140,7 @@ public class Utilisateur implements UserDetails {
     }
 
 
+    @JsonIgnore
     public String getRole(){
         switch (role) {
             case 0:
@@ -166,42 +153,48 @@ public class Utilisateur implements UserDetails {
     }
 
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_"+getRole()));
     }
 
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return email;
     }
 
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
     }
 
 
+    @JsonIgnore
     @Override
     public String getPassword() {
         return password;

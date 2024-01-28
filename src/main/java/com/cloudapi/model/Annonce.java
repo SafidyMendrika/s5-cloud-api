@@ -46,8 +46,10 @@ public class Annonce {
     @Column(name = "id_annonce")
     private int id;
 
-    @Column(name = "idmodele")
-    private int idModele;
+
+    @OneToOne
+    @JoinColumn(name = "idmodele", referencedColumnName = "id_modele")
+    private Modele modele;
 
     @Column(name= "description_annonce")
     private String description;
@@ -80,8 +82,6 @@ public class Annonce {
 
 
 
-
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name ="idutilisateur")
     private Utilisateur utilisateur;
@@ -90,7 +90,6 @@ public class Annonce {
 
 
 
-    @JsonIgnore
     @OneToMany(mappedBy = "annonce")
     private List<PhotoAnnonce> photoAnnonces;
 
@@ -117,7 +116,7 @@ public class Annonce {
 
     @SuppressWarnings(value = "unchecked")
     public List<Annonce> findAll(EntityManager entityManager){
-        String sql = "SELECT * FROM annonces where etat_annonce>=10";
+        String sql = "SELECT * FROM annonces where etat_annonce>=0";
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
         return (List<Annonce>) query.getResultList();
     }

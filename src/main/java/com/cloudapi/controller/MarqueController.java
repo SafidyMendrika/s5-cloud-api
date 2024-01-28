@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,13 +45,15 @@ public class MarqueController {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> insert(@RequestBody MultipartFile file, MarqueDTO marqueDTO){
         Response response = new Response();
         try {
             response.success("Insertion d'une marque", new Marque().insert(entityManager, marqueDTO, file));
         } catch (Exception e) {
-            response.error(new Exception("Erreur lors de l'insertion de la marque"));
+            e.printStackTrace();
+            // response.error(new Exception("Erreur lors de l'insertion de la marque"));
+            response.error(e);
         }
         
         return ResponseEntity.ok(response);
