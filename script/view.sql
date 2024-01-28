@@ -44,7 +44,7 @@ CREATE OR REPLACE VIEW v_top_annonces AS
     FROM 
         annonces_favorites 
     GROUP BY idAnnonce 
-    ORDER BY count;
+    ORDER BY count desc;
 
 
 
