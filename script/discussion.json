@@ -1,7 +1,7 @@
 {
     "id_discussion" : 1,
     
-    "utilisateurs" : [
+    "users" : [
         {
             "id_utilisateur" : 100,
             "mail_utilisateur" : "mendrika@gmail.com",

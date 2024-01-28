@@ -34,7 +34,7 @@ public class DiscussionService {
 
     public Discussion createNewDiscussion(NewDiscussionDTO newDiscussionDTO) {
         Discussion newChat = new Discussion();
-        newChat.setUtilisateurs(newDiscussionDTO.getUsers());
+        newChat.setUsers(newDiscussionDTO.getUsers());
         newChat.setDate_creation(newDiscussionDTO.getDate_creation());
         newChat.setMessages(newDiscussionDTO.getMessages());
 
