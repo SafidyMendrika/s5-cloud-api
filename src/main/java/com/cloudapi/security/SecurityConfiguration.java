@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         "api/energies",
         "api/auth/**",
         "api/test/**",
-        "api/utilisateurs",
+        "api/utilisateurs/**",
         "api/benefices"
     };
 
