@@ -32,18 +32,18 @@ public class Benefice {
     @Column(name = "date",nullable = true)
     private Date date;
 
-    public BeneficeDTO getRealBenefice(EntityManager entityManager,Date dateA , Date dateB){
+    public BeneficeDTO getRealBenefice(EntityManager entityManager){
         BeneficeDTO b = null;
 
         Query query = null;
-        if (dateA == null && dateB == null) {
+        // if (dateA == null && dateB == null) {
             query = entityManager.createNativeQuery("SELECT * FROM v_benefice",BeneficeDTO.class);
             
-        }else{
-            query = entityManager.createNativeQuery("SELECT sum(benefice) as benefice FROM benefices WHERE date between ? and ?",BeneficeDTO.class);
-            query.setParameter(1, dateA);
-            query.setParameter(2, dateB);
-        }
+        // }else{
+        //     query = entityManager.createNativeQuery("SELECT sum(benefice) as benefice FROM benefices WHERE date between ? and ?",BeneficeDTO.class);
+        //     query.setParameter(1, dateA);
+        //     query.setParameter(2, dateB);
+        // }
 
         b = (BeneficeDTO) query.getSingleResult();
 

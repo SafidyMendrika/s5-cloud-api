@@ -31,20 +31,21 @@ public class BeneficeController {
     private EntityManager entityManager;
 
     @GetMapping
-    public ResponseEntity<Response> find(@RequestParam String dateA,@RequestParam String dateB){
+    public ResponseEntity<Response> find(/*@RequestParam String dateA,@RequestParam String dateB*/){
         Response response = new Response();
-        Date date1 = null;
-        Date date2 = null;
+        // Date date1 = null;
+        // Date date2 = null;
 
-        try {
-            date1 = Date.valueOf(dateA);
-            date2 = Date.valueOf(dateB);
-        } catch (Exception e) {
-            response.error(new Exception("Date invalide"));
-            return ResponseEntity.ok(response);
-        }
+        // try {
+        //     date1 = Date.valueOf(dateA);
+        //     date2 = Date.valueOf(dateB);
+        // } catch (Exception e) {
+        //     response.error(new Exception("Date invalide"));
+        //     return ResponseEntity.ok(response);
+        // }
 
-        response.success("Benefices ", new Benefice().getRealBenefice(entityManager,date1,date2));
+        // response.success("Benefices ", new Benefice().getRealBenefice(entityManager,date1,date2));
+        response.success("Benefices ", new Benefice().getRealBenefice(entityManager));
         return ResponseEntity.ok(response);
     }
 }

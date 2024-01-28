@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cloudapi.dto.AnnonceDTO;
 import com.cloudapi.json.Response;
 import com.cloudapi.model.Annonce;
+import com.cloudapi.model.NombreAnnonceParMois;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -73,4 +75,11 @@ public class AnnonceController {
         response.success("Suppression d'une annonce", new Annonce().delete(entityManager,id));
         return ResponseEntity.ok(response);
     }     
+
+    @GetMapping(value = "/statistiques")
+    public ResponseEntity<Response> findSat(@RequestParam int annee)throws Exception{
+        Response response = new Response();
+        response.success("Liste des benefices de l'année' "+annee, new NombreAnnonceParMois().findAByYear(entityManager, annee));
+        return ResponseEntity.ok(response);
+    }
 }
