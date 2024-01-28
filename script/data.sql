@@ -96,4 +96,4 @@ INSERT INTO annonces_favorites(idAnnonce,idUtilisateur) VALUES
     (3,4),
 
     (4,2),
-    (4,4),
+    (4,4);

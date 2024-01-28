@@ -181,7 +181,29 @@ INSERT INTO photos_annonces (idAnnonce, path, etat_photo) VALUES
 (20, 'https://firebasestorage.googleapis.com/v0/b/s5-cloud-api-file.appspot.com/o/volvo2.jpg?alt=media&token=6ad23a69-711e-4b0d-88db-12fa6bb28563', 0),
 (20, 'https://firebasestorage.googleapis.com/v0/b/s5-cloud-api-file.appspot.com/o/volvo3.jpg?alt=media&token=6fce85d3-1885-44b4-990c-54dceeca3e24', 0);
 
+INSERT INTO annonces_favorites(idAnnonce,idUtilisateur) VALUES
+    (1,2),
+    (1,4),
+    (1,5),
+    (1,6),
+    (1,7),
 
+    (2,5),
+    (2,4),
+    (2,3),
+    (2,2),
+
+    (10,5),
+    (10,4),
+    (10,3),
+    (10,2),
+
+    (3,2),
+    (3,3),
+    (3,4),
+
+    (4,2),
+    (4,4);
 
 
 
