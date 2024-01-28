@@ -97,6 +97,10 @@ CREATE TABLE annonces_favorites(
 );
 
 
+    (4,3);
+
+
+
 CREATE TABLE benefices(
     id_benefice SERIAL PRIMARY KEY,
     benefice DECIMAL(10,2),
@@ -104,11 +108,3 @@ CREATE TABLE benefices(
     date TIMESTAMP
 );
 
-
-
-CREATE TABLE annonces(
-    id_annonce SERIAL PRIMARY KEY,
-    prix_annonce DOUBLE PRECISION NOT NULL,
-    date_annonce TIMESTAMP NOT NULL,
-    etat_annonce INTEGER DEFAULT 0
-);

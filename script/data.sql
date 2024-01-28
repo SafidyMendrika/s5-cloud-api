@@ -68,7 +68,32 @@ INSERT INTO photos_annonces (idAnnonce, path, etat_photo) VALUES
 (3, 'photo3.jpg', 0);
 
 -- Annonces Favorites
-INSERT INTO annonces_favorites (idUtilisateur, idAnnonce, etat_favori) VALUES 
-(1, 2, 0),
-(2, 1, 0),
-(3, 3, 0);
+-- INSERT INTO annonces_favorites (idUtilisateur, idAnnonce, etat_favori) VALUES 
+-- (1, 2, 0),
+-- (2, 1, 0),
+-- (3, 3, 0);
+
+
+INSERT INTO annonces_favorites(idAnnonce,idUtilisateur) VALUES
+    (1,2),
+    (1,4),
+    (1,5),
+    (1,6),
+    (1,7),
+
+    (2,5),
+    (2,4),
+    (2,3),
+    (2,2),
+
+    (10,5),
+    (10,4),
+    (10,3),
+    (10,2),
+
+    (3,2),
+    (3,3),
+    (3,4),
+
+    (4,2),
+    (4,4),
