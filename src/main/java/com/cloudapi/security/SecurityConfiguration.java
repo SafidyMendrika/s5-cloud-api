@@ -24,6 +24,7 @@ public class SecurityConfiguration {
 
     private static String[] WHITE_LIST_GET = {
         "api/annonces",
+        "api/annonces/statistiques",
         "api/categories",
         "api/marques",
         "api/modeles",
