@@ -24,7 +24,6 @@ public class SecurityConfiguration {
 
     private static String[] WHITE_LIST_GET = {
         "api/annonces",
-        "api/annonces/statistiques",
         "api/categories",
         "api/marques",
         "api/modeles",
@@ -34,7 +33,10 @@ public class SecurityConfiguration {
         "api/auth/**",
         "api/test/**",
         "api/utilisateurs",
-        "api/benefices"
+        "api/benefices",
+
+        "/api/utilisateurs/nombres",
+        "api/annonces/statistiques"
     };
 
     private static String[] WHITE_LIST_POST = {

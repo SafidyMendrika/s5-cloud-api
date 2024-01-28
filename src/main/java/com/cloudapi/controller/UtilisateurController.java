@@ -102,4 +102,11 @@ public class UtilisateurController {
         response.success("Suppression d'un utilisateur", new Utilisateur().delete(entityManager,id));
         return ResponseEntity.ok(response);
     }   
+
+    @GetMapping(path = "/nombres")
+    public ResponseEntity<Response> countUsers(){
+        Response response = new Response();
+        response.success("nombre des utilisateurs", new Utilisateur().findNombreUtilisateur(entityManager));
+        return ResponseEntity.ok(response);
+    }
 }
