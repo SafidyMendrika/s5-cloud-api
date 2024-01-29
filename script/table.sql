@@ -97,7 +97,6 @@ CREATE TABLE annonces_favorites(
 );
 
 
-    (4,3);
 
 
 
