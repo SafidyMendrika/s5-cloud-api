@@ -70,28 +70,28 @@ INSERT INTO modeles (idMarque, idCategorie, nom_modele, etat_modele) VALUES
 
 
 
-INSERT INTO annonces (idUtilisateur, idModele, description_annonce, prix_annonce, date_annonce, idEnergie, idVitesse, idMoteur, etat_annonce)
+INSERT INTO annonces (idUtilisateur, idModele, description_annonce, prix_annonce, date_annonce,date_validation, idEnergie, idVitesse, idMoteur, etat_annonce)
 VALUES
-(2, 1, 'Audi A1 en très bon état', 25000.00, '2024-01-28 10:00:00', 1, 2, 3, 0),
-(3, 2, 'Chevrolet Camaro à vendre', 35000.00, '2024-01-29 11:15:00', 2, 1, 2, 0),
-(4, 3, 'Citroen C3 à vendre, faible kilométrage', 18000.00, '2024-01-30 12:30:00', 3, 3, 1, 0),
-(5, 4, 'Ford Mustang GT, année 2020', 42000.00, '2024-02-01 13:45:00', 1, 2, 2, 0),
-(6, 5, 'Great Wall Haval H6 à saisir', 22000.00, '2024-02-02 14:30:00', 2, 1, 1, 0),
-(7, 6, 'Honda CR-V, excellent état', 28000.00, '2024-02-03 15:15:00', 3, 3, 2, 0),
-(2, 7, 'Hyundai Sonata à vendre', 20000.00, '2024-02-04 16:30:00', 1, 2, 3, 0),
-(3, 8, 'Kia Sportage, faible consommation', 23000.00, '2024-02-05 17:45:00', 2, 1, 1, 0),
-(4, 9, 'Mercedes-Benz E-Class, année 2021', 50000.00, '2024-02-06 18:30:00', 3, 3, 2, 0),
-(5, 10, 'Nissan Rogue, 4 portes', 26000.00, '2024-02-07 19:15:00', 1, 2, 2, 0),
-(6, 11, 'Opel Astra en parfait état', 19000.00, '2024-02-08 20:30:00', 2, 1, 1, 0),
-(7, 12, 'Peugeot 3008, modèle récent', 27000.00, '2024-02-09 21:45:00', 3, 3, 2, 0),
-(2, 13, 'Porsche 911 Carrera, année 2022', 80000.00, '2024-02-10 22:30:00', 1, 2, 2, 0),
-(3, 14, 'Renault Megane, 5 portes', 21000.00, '2024-02-11 23:15:00', 2, 1, 1, 0),
-(4, 15, 'Seat Ibiza, faible kilométrage', 17000.00, '2024-02-12 10:00:00', 3, 3, 2, 0),
-(5, 16, 'Subaru Outback, idéal pour les aventures', 29000.00, '2024-02-13 11:15:00', 1, 2, 3, 0),
-(6, 17, 'Suzuki Swift à vendre', 15000.00, '2024-02-14 12:30:00', 2, 1, 1, 0),
-(7, 18, 'Toyota Camry, très bien entretenu', 24000.00, '2024-02-15 13:45:00', 3, 3, 2, 0),
-(2, 19, 'Volkswagen Golf, modèle 2021', 28000.00, '2024-02-16 14:30:00', 1, 2, 2, 0),
-(3, 20, 'Volvo XC90, 7 places', 55000.00, '2024-02-17 15:15:00', 2, 1, 1, 0);
+(2, 1, 'Audi A1 en très bon état', 25000000.00, '2023-11-10 10:00:00', '2023-11-20 10:00:00', 1, 2, 3, 20),
+(3, 2, 'Chevrolet Camaro à vendre', 35000000.00, '2024-01-29 11:15:00', null, 2, 1, 2, 0),
+(4, 3, 'Citroen C3 à vendre, faible kilométrage', 18000000.00, '2023-12-01 12:30:00', null, 3, 3, 1, 0),
+(5, 4, 'Ford Mustang GT, année 2020', 42000000.00, '2023-11-15 13:45:00', null, 1, 2, 2, 0),
+(6, 5, 'Great Wall Haval H6 à saisir', 22000000.00, '2024-01-10 14:30:00', '2024-01-15 14:30:00', 2, 1, 1, 20),
+(7, 6, 'Honda CR-V, excellent état', 28000000.00, '2023-12-11 15:15:00', null, 3, 3, 2, 0),
+(2, 7, 'Hyundai Sonata à vendre', 20000000.00, '2024-01-01 16:30:00', null, 1, 2, 3, 0),
+(3, 8, 'Kia Sportage, faible consommation', 23000000.00, '2023-12-01 17:45:00', '2023-12-10 17:45:00', 2, 1, 1, 20),
+(4, 9, 'Mercedes-Benz E-Class, année 2021', 50000000.00, '2024-01-21 18:30:00', null, 3, 3, 2, 0),
+(5, 10, 'Nissan Rogue, 4 portes', 26000000.00, '2023-12-11 19:15:00', '2023-12-16 19:15:00', 1, 2, 2, 20),
+(6, 11, 'Opel Astra en parfait état', 19000000.00, '2023-12-03 20:30:00', null, 2, 1, 1, 0),
+(7, 12, 'Peugeot 3008, modèle récent', 27000000.00, '2024-01-31 21:45:00', null, 3, 3, 2, 0),
+(2, 13, 'Porsche 911 Carrera, année 2022', 80000000.00, '2023-10-05 22:30:00', null, 1, 2, 2, 0),
+(3, 14, 'Renault Megane, 5 portes', 21000000.00, '2023-10-31 23:15:00', null, 2, 1, 1, 0),
+(4, 15, 'Seat Ibiza, faible kilométrage', 17000000.00, '2023-10-11 10:00:00', '2023-10-19 10:00:00', 3, 3, 2, 20),
+(5, 16, 'Subaru Outback, idéal pour les aventures', 29000000.00, '2024-01-02 11:15:00', null, 1, 2, 3, 0),
+(6, 17, 'Suzuki Swift à vendre', 15000000.00, '2023-11-19 12:30:00', null, 2, 1, 1, 0),
+(7, 18, 'Toyota Camry, très bien entretenu', 24000000.00, '2023-11-15 13:45:00', null, 3, 3, 2, 0),
+(2, 19, 'Volkswagen Golf, modèle 2021', 28000000.00, '2024-01-09 14:30:00', null, 1, 2, 2, 0),
+(3, 20, 'Volvo XC90, 7 places', 55000000.00, '2024-01-03 15:15:00', '2024-01-13 15:15:00', 2, 1, 1, 20);
 
 -- Commissions
 INSERT INTO commissions (commission, date_insertion) VALUES 
@@ -204,6 +204,15 @@ INSERT INTO annonces_favorites(idAnnonce,idUtilisateur) VALUES
 
     (4,2),
     (4,4);
+
+
+INSERT INTO benefices (benefice, idAnnonce, date) VALUES
+    (200000,1, '2023-11-30 10:00:00'),
+    (300000,5, '2024-01-20 14:30:00'),
+    (875000,8, '2023-12-25 17:45:00'),
+    (125000,10, '2023-12-20 19:15:00'),
+    (234000,15, '2023-10-26 10:00:00'),
+    (123000,20, '2024-01-26 15:15:00');
 
 
 
