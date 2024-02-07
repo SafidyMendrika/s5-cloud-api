@@ -47,12 +47,16 @@ public class UtilisateurController {
         return ResponseEntity.ok(response);
     }
 
-    // @PostMapping(value = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
-    //     Response response = new Response();
-    //     response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
-    //     return ResponseEntity.ok(response);
-    // }
+    @PostMapping(value = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
+        Response response = new Response();
+        try {
+            response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
+        } catch (Exception e) {
+            response.error(e);
+        }
+        return ResponseEntity.ok(response);
+    }
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "login")

@@ -68,16 +68,8 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf
                     .disable())
             .authorizeHttpRequests(requests -> requests
-                    .requestMatchers(HttpMethod.GET,WHITE_LIST_GET)
-                    .permitAll()
-                    .requestMatchers(HttpMethod.POST,WHITE_LIST_POST)
-                    .permitAll()
-                    .requestMatchers(HttpMethod.PUT,WHITE_LIST_PUT)
-                    .permitAll()
-                    .requestMatchers(HttpMethod.DELETE,WHITE_LIST_DELETE)
-                    .permitAll()
                     .anyRequest()
-                    .authenticated())
+                    .permitAll())
             .sessionManagement(management -> management
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider)
