@@ -57,6 +57,9 @@ public class Utilisateur implements UserDetails {
     private Integer genre;
 
 
+    private String fcm;
+
+
     @JsonIgnore
     @Column(name = "password_utilisateur")
     private String password;

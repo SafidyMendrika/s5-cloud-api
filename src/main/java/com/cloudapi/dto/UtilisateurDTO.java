@@ -9,6 +9,7 @@ public class UtilisateurDTO {
     private String telephone;
     private String date;
     private int genre;
+    private String fcm;
     private String mdp;
     private int role = 0;
 }

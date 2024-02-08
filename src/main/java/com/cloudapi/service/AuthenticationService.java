@@ -47,8 +47,9 @@ public class AuthenticationService {
             .password(passwordEncoder.encode(utilisateurDTO.getMdp()))
             .date(LocalDate.parse(utilisateurDTO.getDate()))
             .genre(utilisateurDTO.getGenre())
+            .fcm(utilisateurDTO.getFcm())
             .telephone(utilisateurDTO.getTelephone())
-            .build();
+            .build(); 
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
@@ -78,6 +79,10 @@ public class AuthenticationService {
         var user = repository.findByEmail(utilisateurDTO.getEmail())
                     .orElseThrow();
         if (user.getRole().equalsIgnoreCase("admin")) throw new Exception("invalide");
+        if (utilisateurDTO.getFcm() != null) {
+            user.setFcm(utilisateurDTO.getFcm());
+            repository.save(user);
+        }
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
             .token(jwtToken)    
