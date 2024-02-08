@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
 import com.cloudapi.model.Utilisateur;
+import com.cloudapi.repository.UtilisateurRepository;
 import com.cloudapi.service.AuthenticationService;
 
 import jakarta.persistence.EntityManager;
@@ -32,6 +33,9 @@ public class UtilisateurController {
     private EntityManager entityManager;
 
     private final AuthenticationService service;
+
+
+    private final UtilisateurRepository utilisateurRepository;
 
     @GetMapping(value = "{id}/annonces-favorites")
     public ResponseEntity<Response> findAllAnnoncesFavorites(@PathVariable int id){
@@ -61,6 +65,13 @@ public class UtilisateurController {
        
     }
 
+
+    @GetMapping(value ="{id}" )
+    public ResponseEntity<Response> findById(@PathVariable int id){
+        Response response = new Response();
+        response.success("Utilisateur "+ id, utilisateurRepository.findById(id));
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping
     public ResponseEntity<Response> findAll(){

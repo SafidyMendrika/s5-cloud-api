@@ -108,7 +108,7 @@ public class Utilisateur implements UserDetails {
 
     @SuppressWarnings(value = "unchecked")
     public List<Utilisateur> findAll(EntityManager entityManager){
-        String sql = "SELECT * FROM utilisateurs where etat_utilisateur=0 and statut_utilisateur=0";
+        String sql = "SELECT * FROM utilisateurs where etat_utilisateur>=0 and statut_utilisateur=0";
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
         return (List<Utilisateur>) query.getResultList();
     }
