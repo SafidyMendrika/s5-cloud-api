@@ -1,6 +1,8 @@
 package com.cloudapi.model;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +44,20 @@ public class Utilisateur implements UserDetails {
 
     @Column(name = "email_utilisateur")
     private String email;
+
+
+    @Column(name = "telephone_utilisateur")
+    private String telephone;
+
+
+    @Column(name = "date_naissance")
+    private LocalDate date;
+
+    
+    private Integer genre;
+
+
+    private String fcm;
 
 
     @JsonIgnore
@@ -95,7 +111,7 @@ public class Utilisateur implements UserDetails {
 
     @SuppressWarnings(value = "unchecked")
     public List<Utilisateur> findAll(EntityManager entityManager){
-        String sql = "SELECT * FROM utilisateurs where etat_utilisateur=0 and statut_utilisateur=0";
+        String sql = "SELECT * FROM utilisateurs where etat_utilisateur>=0 and statut_utilisateur=0";
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
         return (List<Utilisateur>) query.getResultList();
     }
@@ -116,24 +132,30 @@ public class Utilisateur implements UserDetails {
 
     public Utilisateur insert(EntityManager entityManager, UtilisateurDTO utilisateurDTO){
         String sql = """
-                INSERT INTO utilisateurs (nom_utilisateur, email_utilisateur, password_utilisateur, statut_utilisateur) VALUES
-                (?, ?, ?, 0) RETURNING *
+                INSERT INTO utilisateurs (nom_utilisateur, email_utilisateur,telephone_utilisateur,date_naissance ,genre, password_utilisateur, statut_utilisateur) VALUES
+                (?, ?, ?, ?, CAST (? as DATE), ?, 0) RETURNING *
                 """;
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
         query.setParameter(1, utilisateurDTO.getNom());
         query.setParameter(2, utilisateurDTO.getEmail());
         query.setParameter(3, utilisateurDTO.getMdp());
+        query.setParameter(4, utilisateurDTO.getTelephone());
+        query.setParameter(5, utilisateurDTO.getDate());
+        query.setParameter(6, utilisateurDTO.getGenre());
         return (Utilisateur) query.getSingleResult();
     }
 
 
     public Utilisateur update(EntityManager entityManager,int id, UtilisateurDTO utilisateurDTO){
-        String sql = "UPDATE Utilisateurs set nom_utilisateur= ?, email_utilisateur = ?, password_utilisateur= ? where id_utilisateur=? RETURNING *";
+        String sql = "UPDATE Utilisateurs set nom_utilisateur= ?, email_utilisateur = ?, password_utilisateur= ?, telephone_utilisateur= ?, genre= ?, date_naissance = CAST ( ? AS DATE) where id_utilisateur=? RETURNING *";
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
         query.setParameter(1, utilisateurDTO.getNom());
         query.setParameter(2, utilisateurDTO.getEmail());
         query.setParameter(3, utilisateurDTO.getMdp());
-        query.setParameter(4, id);
+        query.setParameter(4, utilisateurDTO.getTelephone());
+        query.setParameter(5, utilisateurDTO.getGenre());
+        query.setParameter(6, utilisateurDTO.getDate());
+        query.setParameter(7, id);
         return (Utilisateur) query.getSingleResult();
     }
 
@@ -143,6 +165,19 @@ public class Utilisateur implements UserDetails {
         Query query = entityManager.createNativeQuery(sql, Utilisateur.class);
         query.setParameter(1, id);
         return (Utilisateur) query.getSingleResult();
+    }
+
+
+
+    public String getGenre(){
+        switch (genre) {
+            case 0:
+                return "Fmme";
+            case 1:
+                return "Homme";
+            default:
+                return "Homme";
+        }
     }
 
 

@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     
 
     private static String[] WHITE_LIST_GET = {
-        "api/annonces",
+        "api/annonces/**",
         "api/categories",
         "api/marques",
         "api/modeles",
@@ -32,7 +32,7 @@ public class SecurityConfiguration {
         "api/energies",
         "api/auth/**",
         "api/test/**",
-        "api/utilisateurs",
+        "api/utilisateurs/**",
         // "api/benefices",
 
         // "/api/utilisateurs/nombres",

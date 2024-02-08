@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import com.cloudapi.model.Discussion;
-import com.cloudapi.model.Message;
 
 
 public interface DiscussionRepository extends MongoRepository<Discussion, String>{
