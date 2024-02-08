@@ -102,8 +102,8 @@ public class AuthenticationService {
 
     public AuthenticationResponse getTokenUser() {
         UtilisateurDTO utilisateurDTO = new UtilisateurDTO();
-        utilisateurDTO.setEmail("root@email.com");
-        utilisateurDTO.setMdp("root");
+        utilisateurDTO.setEmail("mirija@email.com");
+        utilisateurDTO.setMdp("mirija");
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(utilisateurDTO.getEmail(), utilisateurDTO.getMdp())
         );
