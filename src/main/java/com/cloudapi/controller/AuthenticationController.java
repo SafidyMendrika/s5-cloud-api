@@ -28,6 +28,7 @@ public class AuthenticationController {
         try {
             rep.success("Authentification admin réussie",service.authenticateAdmin(utilisateurDTO));
         } catch (Exception e) {
+            e.printStackTrace();
             rep.error(new Exception("Email ou mot de passe incorrect"));
         }
         return ResponseEntity.ok(rep);
