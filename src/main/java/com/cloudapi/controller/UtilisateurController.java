@@ -51,7 +51,7 @@ public class UtilisateurController {
     public ResponseEntity<Response> login(@RequestBody UtilisateurDTO utilisateurDTO){
         Response rep = new Response();
         try {
-            rep.success("Login d'un utilisateur", service.authenticateUser(utilisateurDTO));
+            rep.success("Login d'un utilisateur", utilisateurDTO);
             return ResponseEntity.ok(rep);
         } catch (Exception e) {
             e.printStackTrace();
