@@ -21,6 +21,7 @@ import com.cloudapi.model.NombreAnnonceParMois;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/api/annonces")
@@ -28,6 +29,15 @@ import jakarta.persistence.PersistenceContext;
 public class AnnonceController {
     @PersistenceContext
     private EntityManager entityManager;
+
+
+    
+    @GetMapping(value = "feed")
+    public ResponseEntity<Response> findAnnoncesActualites(@RequestParam("iduser") int id){
+        Response response = new Response();
+        response.success("Liste des annonces", new Annonce().findAllActualite(entityManager, id));
+        return ResponseEntity.ok(response);
+    }
 
 
     @GetMapping(value = "{id}/photos")
