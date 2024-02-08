@@ -66,6 +66,7 @@ public class UtilisateurController {
             rep.success("Login d'un utilisateur", service.authenticate(utilisateurDTO));
             return ResponseEntity.ok(rep);
         } catch (Exception e) {
+            e.printStackTrace();
             rep.error(new Exception("Email ou mot de passe incorrect"));
         }
         return ResponseEntity.ok(rep);
