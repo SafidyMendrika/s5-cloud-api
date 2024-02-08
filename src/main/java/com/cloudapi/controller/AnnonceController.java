@@ -35,7 +35,7 @@ public class AnnonceController {
     @GetMapping(value = "feed")
     public ResponseEntity<Response> findAnnoncesActualites(@RequestParam("iduser") int id){
         Response response = new Response();
-        response.success("Liste des annonces", new Annonce().findAllActualite(entityManager, id));
+        response.success("Feed", new Annonce().findAllActualite(entityManager, id));
         return ResponseEntity.ok(response);
     }
 
