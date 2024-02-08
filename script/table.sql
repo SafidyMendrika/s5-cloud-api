@@ -11,6 +11,9 @@ CREATE TABLE utilisateurs(
     id_utilisateur SERIAL PRIMARY KEY,
     nom_utilisateur VARCHAR(255) NOT NULL,
     email_utilisateur VARCHAR(255) NOT NULL,
+    telephone_utilisateur VARCHAR(255),
+    date_naissance date,
+    genre int,
     password_utilisateur VARCHAR(255) NOT NULL,
     statut_utilisateur INTEGER DEFAULT 0,
     etat_utilisateur INTEGER DEFAULT 0

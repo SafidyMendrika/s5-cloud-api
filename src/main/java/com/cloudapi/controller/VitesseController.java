@@ -1,6 +1,5 @@
 package com.cloudapi.controller;
 
-import java.sql.SQLException;
 
 import org.hibernate.JDBCException;
 import org.springframework.http.MediaType;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cloudapi.dto.MarqueDTO;
 import com.cloudapi.dto.VitesseDTO;
 import com.cloudapi.json.Response;
-import com.cloudapi.model.Marque;
 import com.cloudapi.model.Vitesse;
 
 import jakarta.persistence.EntityManager;

@@ -36,30 +36,22 @@ public class UtilisateurController {
     @GetMapping(value = "{id}/annonces-favorites")
     public ResponseEntity<Response> findAllAnnoncesFavorites(@PathVariable int id){
         Response response = new Response();
-        response.success("Liste des annonces favorites de l' utilisateur "+ id, new Utilisateur().findById(entityManager,id).getAnnonceFavorites());
+        response.success("Liste des annonces favorites de l' utilisateur "+ id, Utilisateur.findById(entityManager,id).getAnnonceFavorites());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping(value = "{id}/annonces")
     public ResponseEntity<Response> findAllAnnonces(@PathVariable int id){
         Response response = new Response();
-        response.success("Liste des annonces de l' utilisateur "+ id, new Utilisateur().findById(entityManager,id).getAnnonces());
+        response.success("Liste des annonces de l' utilisateur "+ id, Utilisateur.findById(entityManager,id).getAnnonces());
         return ResponseEntity.ok(response);
     }
-
-    // @PostMapping(value = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
-    //     Response response = new Response();
-    //     response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
-    //     return ResponseEntity.ok(response);
-    // }
-
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "login")
     public ResponseEntity<Response> login(@RequestBody UtilisateurDTO utilisateurDTO){
         Response rep = new Response();
         try {
-            rep.success("Login d'un utilisateur", service.authenticate(utilisateurDTO));
+            rep.success("Login d'un utilisateur", service.authenticateUser(utilisateurDTO));
             return ResponseEntity.ok(rep);
         } catch (Exception e) {
             rep.error(new Exception("Email ou mot de passe incorrect"));
@@ -76,12 +68,15 @@ public class UtilisateurController {
         return ResponseEntity.ok(response);
     }
 
+
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> insert(@RequestBody UtilisateurDTO utilisateurDTO){
+    public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
         Response response = new Response();
         try {
-            response.success("Inscription d'un utilisateur", service.register(utilisateurDTO));
+            response.success("Inscription d'un utilisateur", service.registerUser(utilisateurDTO));
         } catch (Exception e) {
+            e.printStackTrace();
             response.error(new Exception("Erreur lors de l'insertion d'un utilisateur"));
         }
         return ResponseEntity.ok(response);
@@ -90,7 +85,7 @@ public class UtilisateurController {
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response>  modifier(@PathVariable int id, @RequestBody UtilisateurDTO utilisateurDTO){
         Response response = new Response();
-        response.success("Modification d'un utilisateur", new Utilisateur().update(entityManager,id, utilisateurDTO));
+        response.success("Modification d'un utilisateur", service.update(id, utilisateurDTO));
         return ResponseEntity.ok(response);
     }
 
@@ -106,7 +101,7 @@ public class UtilisateurController {
     @GetMapping(path = "/nombres")
     public ResponseEntity<Response> countUsers(){
         Response response = new Response();
-        response.success("nombre des utilisateurs", new Utilisateur().findNombreUtilisateur(entityManager));
+        response.success("nombre des utilisateurs", Utilisateur.findNombreUtilisateur(entityManager));
         return ResponseEntity.ok(response);
     }
 }

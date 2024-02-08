@@ -9,6 +9,8 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.cloudapi.model.Utilisateur;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -34,8 +36,11 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(Utilisateur userDetails){
+        HashMap<String, Object> map = new HashMap<String,Object>();
+        map.put("idutilisateur", userDetails.getId());
+        map.put("role", userDetails.getRole());
+        return generateToken(map, userDetails);
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){
