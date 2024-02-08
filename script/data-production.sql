@@ -2,7 +2,7 @@
 INSERT INTO energies (nom_energie, etat_energie) VALUES 
 ('Essence', 0),
 ('Diesel', 0),
-('Électrique', 0);
+('Electrique', 0);
 
 -- Vitesses
 INSERT INTO vitesses (nom_vitesse, etat_vitesse) VALUES 

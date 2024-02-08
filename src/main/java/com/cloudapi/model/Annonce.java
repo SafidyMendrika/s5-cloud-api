@@ -35,6 +35,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Query;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 
@@ -94,6 +95,10 @@ public class Annonce {
     private List<PhotoAnnonce> photoAnnonces;
 
 
+    @Transient
+    private int count;
+
+
 
 
 
@@ -101,6 +106,30 @@ public class Annonce {
         return photoAnnonces.stream()
                 .filter(photoAnnonce -> photoAnnonce.getEtat() >= 0)
                 .collect(Collectors.toList());
+    }
+
+
+
+    @SuppressWarnings(value = "unchecked")
+    public List<Annonce> findAllActualite(EntityManager entityManager, int iduser){
+        String sql = "SELECT * FROM annonces where etat_annonce>=0 and idutilisateur != :id";
+        Query query = entityManager.createNativeQuery(sql, Annonce.class);
+        query.setParameter("id", iduser);
+        List<Annonce> annonces = (List<Annonce>) query.getResultList();
+        for (Annonce annonce : annonces) {
+            annonce.setCount(annonce.countFavoris(entityManager));
+        }
+        return annonces;
+    }
+
+
+
+    public int countFavoris(EntityManager entityManager){
+        String sql = "SELECT * FROM annonces_favorites where idannonce = :id";
+        Query query = entityManager.createNativeQuery(sql, AnnonceFavorite.class);
+        query.setParameter("id", id);
+        return query.getResultList().size();
+        
     }
 
 
@@ -118,7 +147,11 @@ public class Annonce {
     public List<Annonce> findAll(EntityManager entityManager){
         String sql = "SELECT * FROM annonces where etat_annonce>=0";
         Query query = entityManager.createNativeQuery(sql, Annonce.class);
-        return (List<Annonce>) query.getResultList();
+        List<Annonce> annonces =  (List<Annonce>) query.getResultList();
+        for (Annonce annonce : annonces) {
+            annonce.setCount(annonce.countFavoris(entityManager));
+        }
+        return annonces;
     }
 
 
