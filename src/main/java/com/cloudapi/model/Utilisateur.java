@@ -165,6 +165,19 @@ public class Utilisateur implements UserDetails {
     }
 
 
+
+    public String getGenre(){
+        switch (genre) {
+            case 0:
+                return "Fmme";
+            case 1:
+                return "Homme";
+            default:
+                return "Homme";
+        }
+    }
+
+
     @JsonIgnore
     public String getRole(){
         switch (role) {
