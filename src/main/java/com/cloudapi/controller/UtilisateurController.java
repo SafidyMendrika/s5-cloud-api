@@ -21,6 +21,7 @@ import com.cloudapi.model.AnnonceFavorite;
 import com.cloudapi.model.Utilisateur;
 import com.cloudapi.repository.UtilisateurRepository;
 import com.cloudapi.service.AuthenticationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -39,6 +40,7 @@ public class UtilisateurController {
 
 
     private final UtilisateurRepository utilisateurRepository;
+    
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,value = "/de-fav")
@@ -115,6 +117,9 @@ public class UtilisateurController {
     public ResponseEntity<Response> inscription(@RequestBody UtilisateurDTO utilisateurDTO){
         Response response = new Response();
         try {
+            System.out.println("tong");
+            ObjectMapper mapper =  new ObjectMapper();
+            System.out.println(mapper.writeValueAsString(mapper));
             response.success("Inscription d'un utilisateur", service.registerUser(utilisateurDTO));
         } catch (Exception e) {
             e.printStackTrace();

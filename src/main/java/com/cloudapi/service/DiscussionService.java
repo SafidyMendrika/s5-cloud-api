@@ -13,6 +13,7 @@ import com.cloudapi.model.Discussion;
 import com.cloudapi.model.Message;
 import com.cloudapi.model.MessageUtilisateur;
 import com.cloudapi.repository.DiscussionRepository;
+import com.cloudapi.repository.UtilisateurRepository;
 
 import jakarta.persistence.EntityManager;
 
@@ -24,6 +25,9 @@ public class DiscussionService {
     @Autowired
     private DiscussionRepository discussionRepository;
 
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
+
     public List<Discussion> findAll(){
         return discussionRepository.findAll();
     }
@@ -33,6 +37,10 @@ public class DiscussionService {
     }
 
     public Discussion createNewDiscussion(NewDiscussionDTO newDiscussionDTO) {
+        for (MessageUtilisateur messageUtilisateur : newDiscussionDTO.getUsers()) {
+            messageUtilisateur.completeData(utilisateurRepository);
+        }
+        
         Discussion newChat = new Discussion();
         newChat.setUsers(newDiscussionDTO.getUsers());
         newChat.setDate_creation(newDiscussionDTO.getDate_creation());
@@ -49,7 +57,8 @@ public class DiscussionService {
         message.setContent(messageDTO.getContent());
 
         MessageUtilisateur us = new MessageUtilisateur();
-        us.setId_utilisateur(messageDTO.getId_user());
+        us.setId_utilisateur(messageDTO.getId_utilisateur());
+        us.completeData(utilisateurRepository);
         // us = Utilisateur.findById(entityManager, messageDTO.getId_user()).toMessageUtilisateur();
         message.setUser(us);
         message.setDate_envoie(Timestamp.valueOf(LocalDateTime.now()).toString());

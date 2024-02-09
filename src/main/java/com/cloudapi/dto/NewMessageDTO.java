@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class NewMessageDTO {
     String id_discussion;
-    int id_user;
+    int id_utilisateur;
     String content;
     
 }
