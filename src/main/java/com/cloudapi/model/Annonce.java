@@ -200,10 +200,11 @@ public class Annonce {
         Annonce annonce =  (Annonce) query.getSingleResult();
         ArrayList<String> filesNames = Util.uploadFiles(files);
         for (String file : filesNames) {
-            sql = "INSERT INTO photos_annonces (idannonce, path) VALUES (?,?)*";
-            query = entityManager.createNativeQuery(sql);
+            sql = "INSERT INTO photos_annonces (idannonce, path) VALUES (?,?) RETURNING *";
+            query = entityManager.createNativeQuery(sql, PhotoAnnonce.class);
             query.setParameter(1, annonce.getId());
             query.setParameter(2, file);
+            Object o = query.getSingleResult();
         }
         return annonce;
     }

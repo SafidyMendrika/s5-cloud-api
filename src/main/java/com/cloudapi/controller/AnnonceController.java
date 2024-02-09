@@ -72,6 +72,7 @@ public class AnnonceController {
         try {
             response.success("Insertion d'une annonce", new Annonce().insert(entityManager, annonceDTO, files));
         } catch (Exception e) {
+            e.printStackTrace();
             response.error(new Exception("Erreur lors de l'insertion de l'annonce"));
         }
        

@@ -33,18 +33,13 @@ public class Util {
 
 
     public static String uploadFile(MultipartFile file)throws Exception{
-        if (FirebaseApp.getApps().isEmpty()) {
-            File f = new File("firebase/s5-cloud-api-file-firebase-adminsdk-7b445-29e99095c2.json");
-            InputStream serviceAccount = new FileInputStream(f);
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setStorageBucket("s5-cloud-api-file.appspot.com")
-                    .build();
 
-            FirebaseApp.initializeApp(options);
+
+        for (FirebaseApp e : FirebaseApp.getApps()) {
+            System.out.println(e.getName());
         }
         
-        StorageClient storageClient = StorageClient.getInstance();
+        StorageClient storageClient = StorageClient.getInstance(FirebaseApp.getInstance("mirija"));
 
         String extension = file.getOriginalFilename().split("\\.")[1];
 
@@ -63,7 +58,7 @@ public class Util {
 
         convFile.delete();
 
-        String downloadUrl = storageClient.bucket().get(b.getBlobId().getName()).signUrl(1, TimeUnit.DAYS).toString();
+        String downloadUrl = storageClient.bucket().get(b.getBlobId().getName()).signUrl(30, TimeUnit.DAYS).toString();
         return downloadUrl;
 
     }
