@@ -33,6 +33,21 @@ public class AnnonceController {
     @PersistenceContext
     private EntityManager entityManager;
 
+    
+    @PostMapping(value="/{id}/vendu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> vendu(@PathVariable int id){
+        Response response = new Response();
+        try {
+            response.success("vente d'une annonce", new Annonce().vendu(entityManager,id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.error(new Exception("Erreur vente d'une annonce"));
+            // TODO: handle exception
+        }
+       
+        return ResponseEntity.ok(response);
+    }
+
 
     
     @GetMapping(value = "feed")
@@ -51,7 +66,7 @@ public class AnnonceController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping(value="/{id}/confirmer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/{id}/confirmer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> confirmer(@PathVariable int id){
         Response response = new Response();
         response.success("Confirmer d'une annonce", new Annonce().confirmer(entityManager,id));

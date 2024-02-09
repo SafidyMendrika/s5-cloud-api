@@ -29,6 +29,15 @@ public class Commission {
     @Column(name="date_insertion")
     private Timestamp dateInsertion;
 
+    @SuppressWarnings(value = "unchecked")
+    public Commission findLast(EntityManager entityManager){
+        String sql = "SELECT * FROM Commissions order by date_insertion DESC";
+        Query query = entityManager.createNativeQuery(sql, Commission.class);
+        List<Commission> Commissions = (List<Commission>) query.getResultList();
+        if (Commissions.size() == 0) return null;
+        return Commissions.get(0);
+    }
+
 
     @SuppressWarnings(value = "unchecked")
     public List<Commission> findAll(EntityManager entityManager){
