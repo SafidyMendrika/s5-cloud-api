@@ -101,9 +101,6 @@ CREATE TABLE annonces_favorites(
 );
 
 
-
-
-
 CREATE TABLE benefices(
     id_benefice SERIAL PRIMARY KEY,
     benefice DECIMAL(10,2),
