@@ -46,7 +46,13 @@ public class DiscussionController {
     @GetMapping(path = "/utilisateurs/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> findDiscussionsOf(@PathVariable("id") int id){
         Response rep = new Response();
-        rep.success("Messages de "+id, discussionService.findDuscissionsOf(id));
+        try {
+            rep.success("Messages de "+id, discussionService.findDuscissionsOf(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            rep.error(new Exception("Erreur lors de la récupération du message"));
+            // TODO: handle exception
+        }
         return ResponseEntity.ok(rep);
     }
     
