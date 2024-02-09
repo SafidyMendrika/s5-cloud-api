@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cloudapi.dto.AnnonceDTO;
+import com.cloudapi.dto.AnnonceFavoriteDTO;
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
+import com.cloudapi.model.AnnonceFavorite;
 import com.cloudapi.model.Utilisateur;
 import com.cloudapi.repository.UtilisateurRepository;
 import com.cloudapi.service.AuthenticationService;
@@ -36,6 +39,32 @@ public class UtilisateurController {
 
 
     private final UtilisateurRepository utilisateurRepository;
+
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,value = "/de-fav")
+    public ResponseEntity<Response> DisLike(@RequestBody AnnonceFavoriteDTO annonceFavoriteDTO){
+        Response response = new Response();
+        try {
+            response.success("Dislike d'une annonce", AnnonceFavorite.delete(entityManager, annonceFavoriteDTO));
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.error(new Exception("Erreur lors du dislike d'une annonce"));
+        }
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,value = "/fav")
+    public ResponseEntity<Response> ILike(@RequestBody AnnonceFavoriteDTO annonceFavoriteDTO){
+        Response response = new Response();
+        try {
+            response.success("Like d'une annonce", AnnonceFavorite.insert(entityManager, annonceFavoriteDTO));
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.error(new Exception("Erreur lors du Like d'une annonce"));
+        }
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping(value = "{id}/annonces-favorites")
     public ResponseEntity<Response> findAllAnnoncesFavorites(@PathVariable int id){
