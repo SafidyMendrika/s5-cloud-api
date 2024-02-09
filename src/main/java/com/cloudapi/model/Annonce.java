@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudapi.dto.AnnonceDTO;
+import com.cloudapi.util.Util;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
@@ -180,7 +181,7 @@ public class Annonce {
     }
 
 
-    public Annonce insert(EntityManager entityManager, AnnonceDTO annonceDTO){
+    public Annonce insert(EntityManager entityManager, AnnonceDTO annonceDTO, ArrayList<MultipartFile> files) throws Exception{
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String sql = """
@@ -196,7 +197,15 @@ public class Annonce {
         query.setParameter(6, annonceDTO.getIdenergie());
         query.setParameter(7, annonceDTO.getIdvitesse());
         query.setParameter(8, annonceDTO.getIdmoteur());
-        return (Annonce) query.getSingleResult();
+        Annonce annonce =  (Annonce) query.getSingleResult();
+        ArrayList<String> filesNames = Util.uploadFiles(files);
+        for (String file : filesNames) {
+            sql = "INSERT INTO photos_annonces (idannonce, path) VALUES (?,?)*";
+            query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, annonce.getId());
+            query.setParameter(2, file);
+        }
+        return annonce;
     }
 
 
