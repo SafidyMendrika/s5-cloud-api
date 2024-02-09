@@ -99,6 +99,10 @@ public class Annonce {
     private int count;
 
 
+    @Transient
+    private boolean isFavori = false;
+
+
 
 
 
@@ -118,8 +122,21 @@ public class Annonce {
         List<Annonce> annonces = (List<Annonce>) query.getResultList();
         for (Annonce annonce : annonces) {
             annonce.setCount(annonce.countFavoris(entityManager));
+            annonce.setFavori(annonce.isFavori(entityManager, iduser));
         }
         return annonces;
+    }
+
+
+
+    public boolean isFavori(EntityManager entityManager, int iduser){
+        String sql = "SELECT * FROM annonces_favorites where idannonce = :id and idutilisateur= :iduser";
+        Query query = entityManager.createNativeQuery(sql, AnnonceFavorite.class);
+        query.setParameter("id", id);
+        query.setParameter("iduser", iduser);
+        if (query.getResultList().size() > 0) return true;
+        return false;
+        
     }
 
 
