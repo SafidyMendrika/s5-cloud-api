@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     
 
     private static String[] WHITE_LIST_GET = {
-        "api/annonces/**",
+        "api/annonces",
         "api/categories",
         "api/marques",
         "api/modeles",
@@ -64,12 +64,20 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-                http
-            .csrf(csrf -> csrf
-                    .disable())
-            .authorizeHttpRequests(requests -> requests
-                    .anyRequest()
-                    .permitAll())
+        http
+        .csrf(csrf -> csrf
+                .disable())
+        .authorizeHttpRequests(requests -> requests
+                .requestMatchers(HttpMethod.GET,WHITE_LIST_GET)
+                .permitAll()
+                .requestMatchers(HttpMethod.POST,WHITE_LIST_POST)
+                .permitAll()
+                .requestMatchers(HttpMethod.PUT,WHITE_LIST_PUT)
+                .permitAll()
+                .requestMatchers(HttpMethod.DELETE,WHITE_LIST_DELETE)
+                .permitAll()
+                .anyRequest()
+                .authenticated())
             .sessionManagement(management -> management
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider)
