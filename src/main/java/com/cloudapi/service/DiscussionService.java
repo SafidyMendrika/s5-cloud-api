@@ -40,6 +40,7 @@ public class DiscussionService {
         for (MessageUtilisateur messageUtilisateur : newDiscussionDTO.getUsers()) {
             messageUtilisateur.completeData(utilisateurRepository);
         }
+        
         Discussion newChat = new Discussion();
         newChat.setUsers(newDiscussionDTO.getUsers());
         newChat.setDate_creation(newDiscussionDTO.getDate_creation());
