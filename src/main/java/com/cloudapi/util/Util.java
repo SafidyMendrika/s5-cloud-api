@@ -11,11 +11,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.web.multipart.MultipartFile;
-
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
 
 public class Util {

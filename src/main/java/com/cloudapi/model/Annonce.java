@@ -150,6 +150,24 @@ public class Annonce {
         
     }
 
+    public Annonce vendu(EntityManager entityManager,int id){
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter dFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String sql = "UPDATE annonces set etat_annonce=20 where id_annonce=? RETURNING *";
+        Query query = entityManager.createNativeQuery(sql, Annonce.class);
+        query.setParameter(1, id);
+        Annonce annonce = (Annonce) query.getSingleResult();
+        Commission commission = new Commission().findLast(entityManager);
+        double benef = annonce.prix * commission.getCommission() / 100;
+        sql = "INSERT INTO benefices (benefice, idAnnonce, date) VALUES (?, ?, CAST (? AS  TIMESTAMP)) RETURNING *";
+        query = entityManager.createNativeQuery(sql, Benefice.class);
+        query.setParameter(1, benef);
+        query.setParameter(2, annonce.getId());
+        query.setParameter(3, dFormatter.format(date));
+        Object o = query.getSingleResult();
+        return annonce;
+    }
+
 
     public Annonce confirmer(EntityManager entityManager,int id){
         LocalDateTime date = LocalDateTime.now();
