@@ -1,5 +1,7 @@
 package com.cloudapi.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudapi.dto.AnnonceDTO;
 import com.cloudapi.json.Response;
@@ -63,10 +66,15 @@ public class AnnonceController {
     }
 
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> insert(@RequestBody AnnonceDTO annonceDTO){
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Response> insert(@RequestBody ArrayList<MultipartFile> files, AnnonceDTO annonceDTO){
         Response response = new Response();
-        response.success("Insertion d'une annonce", new Annonce().insert(entityManager, annonceDTO));
+        try {
+            response.success("Insertion d'une annonce", new Annonce().insert(entityManager, annonceDTO, files));
+        } catch (Exception e) {
+            response.error(new Exception("Erreur lors de l'insertion de l'annonce"));
+        }
+       
         return ResponseEntity.ok(response);
     }
 
