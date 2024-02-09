@@ -37,6 +37,7 @@ public class UtilisateurController {
 
 
     private final UtilisateurRepository utilisateurRepository;
+    
 
     @GetMapping(value = "{id}/annonces-favorites")
     public ResponseEntity<Response> findAllAnnoncesFavorites(@PathVariable int id){
