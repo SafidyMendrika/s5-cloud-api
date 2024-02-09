@@ -172,7 +172,7 @@ public class Utilisateur implements UserDetails {
     public String getGenre(){
         switch (genre) {
             case 0:
-                return "Fmme";
+                return "Femme";
             case 1:
                 return "Homme";
             default:
