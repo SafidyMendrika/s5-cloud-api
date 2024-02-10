@@ -1,0 +1,78 @@
+[
+    {
+        "users" : [
+            {
+                "id_utilisateur" : 3,
+                "mail_utilisateur" : "toky@email.com",
+                "nom_utilisateur" : "Toky"
+            },
+             {
+                "id_utilisateur" : 4,
+                "mail_utilisateur" : "mendrika@email.com",
+                "nom_utilisateur" : "Mendrika"
+            }
+        ],
+        
+        "date_creation" : "2024/01/26 10:00",
+        "messages" : [
+          {
+            "user" : {
+                "id_utilisateur" : 4,
+                "mail_utilisateur" : "mendrika@email.com",
+                "nom_utilisateur" : "Mendrika"
+            },
+            "content" : "Bonjour ça va vous?",
+            "date_envoie" : "2024/01/26 10:02"
+          }  ,
+          {
+            "user" : {
+                "id_utilisateur" : 3,
+                "mail_utilisateur" : "toky@email.com",
+                "nom_utilisateur" : "Toky"
+            },
+            "content" : "Salutations",
+            "date_envoie" : "2024/01/26 10:03"
+          }  
+        ],
+        "closed" : false
+    
+      },
+      {
+        "users" : [
+            {
+                "id_utilisateur" : 5,
+                "mail_utilisateur" : "tahiry@email.com",
+                "nom_utilisateur" : "Tahiry"
+            },
+             {
+                "id_utilisateur" : 4,
+                "mail_utilisateur" : "mendrika@email.com",
+                "nom_utilisateur" : "Mendrika"
+            }
+        ],
+        
+        "date_creation" : "2024/01/26 10:00",
+        "messages" : [
+          {
+            "user" : {
+                "id_utilisateur" : 4,
+                "mail_utilisateur" : "mendrika@email.com",
+                "nom_utilisateur" : "Mendrika"
+            },
+            "content" : "Bonjour, Mercedess?",
+            "date_envoie" : "2024/01/26 10:02"
+          }  ,
+          {
+            "user" : {
+                "id_utilisateur" : 5,
+                "mail_utilisateur" : "tahiry@email.com",
+                "nom_utilisateur" : "Tahiry"
+            },
+            "content" : "Saluut",
+            "date_envoie" : "2024/01/26 10:03"
+          }  
+        ],
+        "closed" : false
+    
+      }
+]

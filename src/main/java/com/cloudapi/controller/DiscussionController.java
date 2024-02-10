@@ -17,7 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cloudapi.dto.NewDiscussionDTO;
 import com.cloudapi.dto.NewMessageDTO;
 import com.cloudapi.json.Response;
+import com.cloudapi.model.Discussion;
+import com.cloudapi.model.Utilisateur;
+import com.cloudapi.repository.DiscussionRepository;
+import com.cloudapi.repository.UtilisateurRepository;
 import com.cloudapi.service.DiscussionService;
+import com.cloudapi.service.FirebaseMessagingService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -34,6 +39,15 @@ public class DiscussionController {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private FirebaseMessagingService firebaseMessagingService;
+
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
+
+    
+    @Autowired
+    private DiscussionRepository discussionRepository;
     // ALL DISCUSSIONS
      
     @GetMapping
@@ -60,6 +74,16 @@ public class DiscussionController {
     public ResponseEntity<Response> insert(@RequestBody NewDiscussionDTO newDiscussionDTO){
         Response rep = new Response();
         rep.success("creation discussion", discussionService.createNewDiscussion(newDiscussionDTO));
+
+        try {
+            
+            Utilisateur u = utilisateurRepository.findById(newDiscussionDTO.getUsers().get(1).getId_utilisateur()).get();
+            Utilisateur sender = utilisateurRepository.findById(newDiscussionDTO.getUsers().get(0).getId_utilisateur()).get();
+            firebaseMessagingService.sendNotificationTo(u, "Info Gascar app", sender.getNom()+" vous a ouvert une discussion avec vous");
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         return ResponseEntity.ok(rep);
     }
 
@@ -67,10 +91,28 @@ public class DiscussionController {
     public ResponseEntity<Response> addMessage(@RequestBody NewMessageDTO newMessageDTO){
         Response rep = new Response();  
         rep.success("creation discussion", discussionService.sendMessage(entityManager,newMessageDTO));
-        return ResponseEntity.ok(rep);
-    }
-
-    @DeleteMapping(path ="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+        
+        try {
+            
+            Utilisateur u = utilisateurRepository.findById(newMessageDTO.getId_utilisateur()).get();
+            
+            Discussion chatDocument = discussionRepository.findById(newMessageDTO.getId_discussion()).get();
+            
+            int idSender = chatDocument.getUsers().get(0).getId_utilisateur();
+            if (idSender == u.getId()) {
+                idSender = chatDocument.getUsers().get(1).getId_utilisateur();
+            }
+            
+            Utilisateur sender = utilisateurRepository.findById(idSender).get();
+            
+            firebaseMessagingService.sendNotificationTo(u, "Message de "+sender, newMessageDTO.getContent());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+            return ResponseEntity.ok(rep);
+        }
+        
+        @DeleteMapping(path ="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> close(@PathVariable("id") String id){
         Response rep = new Response();  
         rep.success("creation discussion", discussionService.closeDiscussion(entityManager,id));
