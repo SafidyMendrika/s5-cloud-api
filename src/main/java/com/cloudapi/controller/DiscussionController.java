@@ -79,7 +79,7 @@ public class DiscussionController {
             
             Utilisateur u = utilisateurRepository.findById(newDiscussionDTO.getUsers().get(1).getId_utilisateur()).get();
             Utilisateur sender = utilisateurRepository.findById(newDiscussionDTO.getUsers().get(0).getId_utilisateur()).get();
-            firebaseMessagingService.sendNotificationTo(u, "Info Gascar app", sender.getNom()+" vous a ouvert une discussion avec vous");
+            firebaseMessagingService.sendNotificationTo(u, "Info Gascar app", sender.getNom()+" a ouvert une discussion avec vous");
             
         } catch (Exception e) {
             // TODO: handle exception
@@ -105,7 +105,7 @@ public class DiscussionController {
             
             Utilisateur sender = utilisateurRepository.findById(idSender).get();
             
-            firebaseMessagingService.sendNotificationTo(u, "Message de "+sender, newMessageDTO.getContent());
+            firebaseMessagingService.sendNotificationTo(u, "Message de "+sender.getNom(), newMessageDTO.getContent());
         } catch (Exception e) {
             // TODO: handle exception
         }
