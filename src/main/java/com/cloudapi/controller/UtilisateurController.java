@@ -1,5 +1,6 @@
 package com.cloudapi.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,10 +18,12 @@ import com.cloudapi.dto.AnnonceDTO;
 import com.cloudapi.dto.AnnonceFavoriteDTO;
 import com.cloudapi.dto.UtilisateurDTO;
 import com.cloudapi.json.Response;
+import com.cloudapi.model.Annonce;
 import com.cloudapi.model.AnnonceFavorite;
 import com.cloudapi.model.Utilisateur;
 import com.cloudapi.repository.UtilisateurRepository;
 import com.cloudapi.service.AuthenticationService;
+import com.cloudapi.service.FirebaseMessagingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.persistence.EntityManager;
@@ -41,6 +44,8 @@ public class UtilisateurController {
 
     private final UtilisateurRepository utilisateurRepository;
     
+    @Autowired
+    private FirebaseMessagingService firebaseMessagingService;
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,value = "/de-fav")
@@ -61,6 +66,17 @@ public class UtilisateurController {
         Response response = new Response();
         try {
             response.success("Like d'une annonce", AnnonceFavorite.insert(entityManager, annonceFavoriteDTO));
+
+            try {
+                
+                Annonce a = (Annonce) entityManager.createNativeQuery("SELECT * FROM annonces WHERE id_annonce="+annonceFavoriteDTO.getIdannonce(),Annonce.class).getSingleResult();
+                
+                Utilisateur u = utilisateurRepository.findById(annonceFavoriteDTO.getIdutilisateur()).get();
+                firebaseMessagingService.sendNotificationTo(a.getUtilisateur(), "Info Gascar app", u.getNom()+" a mis en favoris votre annonce du "+a.getModele().getMarque().getNom()+" "+a.getModele().getNom());
+            } catch (Exception mm) {
+                // TODO: handle exception
+            }
+      
         } catch (Exception e) {
             e.printStackTrace();
             response.error(new Exception("Erreur lors du Like d'une annonce"));

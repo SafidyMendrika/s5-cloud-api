@@ -2,6 +2,7 @@ package com.cloudapi.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,8 @@ import com.cloudapi.dto.AnnonceDTO;
 import com.cloudapi.json.Response;
 import com.cloudapi.model.Annonce;
 import com.cloudapi.model.NombreAnnonceParMois;
+import com.cloudapi.repository.UtilisateurRepository;
+import com.cloudapi.service.FirebaseMessagingService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -33,12 +36,18 @@ public class AnnonceController {
     @PersistenceContext
     private EntityManager entityManager;
 
+
+
+    @Autowired
+    private FirebaseMessagingService firebaseMessagingService;
     
     @PostMapping(value="/{id}/vendu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> vendu(@PathVariable int id){
         Response response = new Response();
         try {
             response.success("vente d'une annonce", new Annonce().vendu(entityManager,id));
+
+            
         } catch (Exception e) {
             e.printStackTrace();
             response.error(new Exception("Erreur vente d'une annonce"));
@@ -70,6 +79,17 @@ public class AnnonceController {
     public ResponseEntity<Response> confirmer(@PathVariable int id){
         Response response = new Response();
         response.success("Confirmer d'une annonce", new Annonce().confirmer(entityManager,id));
+
+        try {
+            
+            Annonce a = (Annonce) entityManager.createNativeQuery("SELECT * FROM annonces WHERE id_annonce="+id,Annonce.class).getSingleResult();
+            
+            
+            firebaseMessagingService.sendNotificationTo(a.getUtilisateur(), "Info Gascar app", " Votre annonce du "+a.getModele().getMarque().getNom()+" "+a.getModele().getNom()+" a été validé");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
         return ResponseEntity.ok(response);
     }
 
@@ -86,6 +106,8 @@ public class AnnonceController {
         Response response = new Response();
         try {
             response.success("Insertion d'une annonce", new Annonce().insert(entityManager, annonceDTO, files));
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
             response.error(new Exception("Erreur lors de l'insertion de l'annonce"));
